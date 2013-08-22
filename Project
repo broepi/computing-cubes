@@ -1,0 +1,9 @@
+
+PROJECTNAME=computingcubes
+BUILDDIR=build
+SRCDIR=src
+GPP=g++
+COMPFLAGS=-I./src
+LINKFLAGS=
+LIBFLAGS=-lSDL2
+
