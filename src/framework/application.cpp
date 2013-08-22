@@ -37,6 +37,8 @@ void Application::run ()
 {
 	Uint32 lasttick = 0, curtick = 0;
 	
+	debugmsg ("Application.run");
+	
 	running = true;
 	while (running) {
 		SDL_Event event;
@@ -48,6 +50,8 @@ void Application::run ()
 			lasttick = curtick;
 		}
 	}
+	
+	debugmsg ("Application.run finish");
 }
 
 void Application::on_event (SDL_Event *event)
