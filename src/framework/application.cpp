@@ -19,6 +19,7 @@ Application::Application () throw (Error)
 		throw Error ( string ("SDL_Init") + string (SDL_GetError ()) );
 	
 	eventmanager = new EventManager ();
+	eventmanager->add_handler (SDL_QUIT, this);
 }
 
 Application::~Application ()
@@ -40,6 +41,7 @@ void Application::run ()
 	while (running) {
 		SDL_Event event;
 		while (SDL_PollEvent (&event) == 1) {
+			eventmanager->route_event (&event);
 		}
 		curtick = SDL_GetTicks ();
 		if (curtick-lasttick >= 1000.0/fps_target) {
@@ -50,5 +52,8 @@ void Application::run ()
 
 void Application::on_event (SDL_Event *event)
 {
+	if (event->type == SDL_QUIT) {
+		running = false;
+	}
 }
 
