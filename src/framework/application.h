@@ -6,6 +6,7 @@
 #include <string>
 #include "framework/error.h"
 #include "framework/eventmanager.h"
+#include "framework/display.h"
 
 struct Application : EventManager::Handler
 {
@@ -19,6 +20,7 @@ struct Application : EventManager::Handler
 	bool running;
 	double fps_target;
 	EventManager *eventmanager;
+	Display *display;
 };
 
 #endif // APPLICATION_H

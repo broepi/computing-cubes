@@ -3,7 +3,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "framework/application.h"
-#include "framework/error.h"
 
 using namespace std;
 
@@ -16,14 +15,17 @@ Application::Application () throw (Error)
 	debugmsg ("framework: Application ()");
 	
 	if (SDL_Init (SDL_INIT_VIDEO) != 0)
-		throw Error ( string ("SDL_Init") + string (SDL_GetError ()) );
+		throw Error ( string ("SDL_Init: ") + string (SDL_GetError ()) );
 	
 	eventmanager = new EventManager ();
 	eventmanager->add_handler (SDL_QUIT, this);
+	display = new Display ();
+	eventmanager->add_handler (SDL_WINDOWEVENT, display);
 }
 
 Application::~Application ()
 {
+	delete display;
 	delete eventmanager;
 }
 
@@ -48,6 +50,8 @@ void Application::run ()
 		curtick = SDL_GetTicks ();
 		if (curtick-lasttick >= 1000.0/fps_target) {
 			lasttick = curtick;
+			display->clear ();
+			display->present ();
 		}
 	}
 	
