@@ -5,5 +5,5 @@ SRCDIR=src
 GPP=g++
 COMPFLAGS=-I./src
 LINKFLAGS=
-LIBFLAGS="-lSDL2 -lGL"
+LIBFLAGS="-lSDL2 -lSDL2_image -lSDL2_ttf -lGL"
 

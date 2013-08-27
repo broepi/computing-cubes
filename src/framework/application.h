@@ -3,24 +3,23 @@
 #define APPLICATION_H
 
 #include <SDL2/SDL.h>
-#include <string>
-#include "framework/error.h"
 #include "framework/eventmanager.h"
-#include "framework/display.h"
 
+// abstract class
 struct Application : EventManager::Handler
 {
-	Application () throw (Error);
+	Application ();
 	~Application ();
-	void debugmsg (string);
 	void run ();
 	void on_event (SDL_Event *);
+	virtual void display_clear () = 0;
+	virtual void display_present () = 0;
+	virtual void draw_scene () = 0;
 	
 	bool verbose;
 	bool running;
 	double fps_target;
 	EventManager *eventmanager;
-	Display *display;
 };
 
 #endif // APPLICATION_H

@@ -8,8 +8,6 @@
 
 using namespace std;
 
-struct EventHandler;
-
 struct EventManager
 {
 	struct Handler

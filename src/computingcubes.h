@@ -2,10 +2,17 @@
 #ifndef computingcubes_H
 #define computingcubes_H
 
-#include "framework/framework.h"
+#include "framework/opengl/glapplication.h"
 
-struct ComputingCubes : Application
+struct GLTexture;
+
+struct ComputingCubes : GLApplication
 {
+	ComputingCubes ();
+	~ComputingCubes ();
+	void draw_scene ();
+	
+	GLTexture *testtex;
 };
 
 #endif // computingcubes_H

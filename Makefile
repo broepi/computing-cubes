@@ -7,8 +7,8 @@ rebuild : clean all
 clean :
 	-rm build/*
 
-build/computingcubes :  build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/main.o
-	g++ -o build/computingcubes   build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/main.o -lSDL2 -lGL
+build/computingcubes :  build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/glapplication.o build/gldisplay.o build/gltexture.o build/utils.o build/main.o
+	g++ -o build/computingcubes   build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/glapplication.o build/gldisplay.o build/gltexture.o build/utils.o build/main.o -lSDL2 -lSDL2_image -lSDL2_ttf -lGL
 
 build/computingcubes.o : src/computingcubes.cpp
 	g++ -o build/computingcubes.o -I./src -c src/computingcubes.cpp
@@ -24,6 +24,18 @@ build/error.o : src/framework/error.cpp
 
 build/eventmanager.o : src/framework/eventmanager.cpp
 	g++ -o build/eventmanager.o -I./src -c src/framework/eventmanager.cpp
+
+build/glapplication.o : src/framework/opengl/glapplication.cpp
+	g++ -o build/glapplication.o -I./src -c src/framework/opengl/glapplication.cpp
+
+build/gldisplay.o : src/framework/opengl/gldisplay.cpp
+	g++ -o build/gldisplay.o -I./src -c src/framework/opengl/gldisplay.cpp
+
+build/gltexture.o : src/framework/opengl/gltexture.cpp
+	g++ -o build/gltexture.o -I./src -c src/framework/opengl/gltexture.cpp
+
+build/utils.o : src/framework/utils.cpp
+	g++ -o build/utils.o -I./src -c src/framework/utils.cpp
 
 build/main.o : src/main.cpp
 	g++ -o build/main.o -I./src -c src/main.cpp

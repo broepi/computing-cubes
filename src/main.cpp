@@ -1,7 +1,7 @@
 
 #include <iostream>
-#include "framework/framework.h"
 #include "computingcubes.h"
+#include "framework/error.h"
 
 using namespace std;
 
