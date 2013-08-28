@@ -43,9 +43,6 @@ Font::Font (string filename, unsigned long size)
 			bmp->pitch * bmp->rows * sizeof (unsigned char));
 		
 		max_height = max (max_height, bmp->rows);
-
-		//dbglog << face->glyph->bitmap.width << " " << face->glyph->bitmap.rows << " "
-		//	<< face->glyph->bitmap.pitch << "\n";
 	}
 }
 
