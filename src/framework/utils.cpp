@@ -1,15 +1,8 @@
 
-#include <iostream>
 #include <sstream>
 #include "framework/utils.h"
 
-bool logging_enabled = true;
-
-void dbglog (string msg)
-{
-	if (logging_enabled)
-		cerr << msg << endl;
-}
+Logger dbglog;
 
 int power2_expanded (int input)
 {
@@ -21,16 +14,12 @@ int power2_expanded (int input)
     return value;
 }
 
-string itostr (int i)
+RGB::RGB (unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-	stringstream ss;
-	ss << i;
-	return ss.str ();
+	this->r = r; this->g = g; this->b = b; this->a = a;
 }
 
-string dtostr (double d)
+Logger::Logger ()
 {
-	stringstream ss;
-	ss << d;
-	return ss.str ();
+	enabled = true;
 }

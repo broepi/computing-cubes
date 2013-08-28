@@ -1,6 +1,7 @@
 
 #include "framework/opengl/gldisplay.h"
 #include "framework/error.h"
+#include "framework/utils.h"
 
 GLDisplay::GLDisplay (string wndname, int w, int h)
 	: Display (w, h)
@@ -28,9 +29,20 @@ GLDisplay::~GLDisplay ()
 	this->Display::~Display ();
 }
 
+void GLDisplay::on_event (SDL_Event *event)
+{
+	this->Display::on_event (event);
+	if (event->type == SDL_WINDOWEVENT) {
+		if (event->window.event == SDL_WINDOWEVENT_RESIZED) {
+			glViewport (0, 0, w, h);
+		}
+	}
+}
+
 void GLDisplay::clear ()
 {
 	glClearColor (0, 0.5, 0.5, 1);
+	//glClearColor (1, 1, 1, 1);
 	glClear (GL_COLOR_BUFFER_BIT);
 }
 
@@ -39,3 +51,14 @@ void GLDisplay::present ()
 	SDL_GL_SwapWindow (window);
 }
 
+void GLDisplay::toggle_screen_drawmode ()
+{
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity ();
+	glOrtho (0, w, h, 0, -1, 1);
+
+	glMatrixMode (GL_MODELVIEW);
+	glLoadIdentity ();
+
+	glDisable (GL_DEPTH_TEST);
+}

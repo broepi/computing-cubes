@@ -13,8 +13,10 @@ struct GLDisplay : Display
 {
 	GLDisplay (string wndname = "One of those windows", int w = 800, int h = 600);
 	~GLDisplay ();
+	void on_event (SDL_Event *);
 	void clear ();
 	void present ();
+	void toggle_screen_drawmode ();
 	 
 	SDL_Window *window;
 	SDL_GLContext glcontext;

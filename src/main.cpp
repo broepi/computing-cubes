@@ -2,12 +2,15 @@
 #include <iostream>
 #include "computingcubes.h"
 #include "framework/error.h"
+#include "framework/utils.h"
 
 using namespace std;
 
 int main (int argc, char *argv[])
 {
 	ComputingCubes *ccapp;
+	
+	dbglog.enabled = true;
 	
 	cout << "Computing Cubes" << endl;
 	

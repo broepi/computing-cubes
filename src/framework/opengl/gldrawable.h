@@ -7,7 +7,7 @@ struct GLDisplay;
 // interface
 struct GLDrawable
 {
-	virtual void draw (GLDisplay *display) = 0;
+	virtual void draw () = 0;
 };
 
 #endif

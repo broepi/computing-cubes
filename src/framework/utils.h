@@ -2,16 +2,36 @@
 #ifndef utils_H
 #define utils_H
 
+#include <iostream>
 #include <string>
+#include <SDL2/SDL.h>
 
 using namespace std;
 
-void dbglog (string msg);
 int power2_expanded (int input);
-string itostr (int i);
-string dtostr (double i);
 
-extern bool logging_enabled;
+struct RGB : SDL_Color
+{
+	RGB (unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
+};
+
+struct Logger
+{
+	Logger ();
+	template <typename T> Logger &operator<< (const T &x);
+	
+	bool enabled;
+};
+
+template <typename T>
+Logger &Logger::operator<< (const T &x)
+{
+	if (enabled)
+		cout << x;
+	return *this;
+}
+
+extern Logger dbglog;
 
 #endif
 

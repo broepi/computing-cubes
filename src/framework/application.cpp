@@ -1,5 +1,4 @@
 
-#include <SDL2/SDL_ttf.h>
 #include "framework/application.h"
 #include "framework/utils.h"
 #include "framework/error.h"
@@ -10,13 +9,10 @@ Application::Application ()
 	running = false;
 	fps_target = 60.0;
 	
-	dbglog ("framework: Application ()");
+	dbglog << "framework: Application ()\n";
 	
 	if (SDL_Init (SDL_INIT_VIDEO) != 0)
 		throw Error ( string ("SDL_Init: ") + string (SDL_GetError ()) );
-	
-	if (TTF_Init () != 0)
-		throw Error ( string ("TTF_Init: ") + string (TTF_GetError ()) );
 	
 	eventmanager = new EventManager ();
 	eventmanager->add_handler (SDL_QUIT, this);
@@ -31,7 +27,7 @@ void Application::run ()
 {
 	Uint32 lasttick = 0, curtick = 0;
 	
-	dbglog ("Application.run");
+	dbglog << "Application.run\n";
 	
 	running = true;
 	while (running) {
@@ -48,7 +44,7 @@ void Application::run ()
 		}
 	}
 	
-	dbglog ("Application.run finish");
+	dbglog << "Application.run finish\n";
 }
 
 void Application::on_event (SDL_Event *event)

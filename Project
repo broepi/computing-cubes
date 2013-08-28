@@ -3,7 +3,7 @@ PROJECTNAME=computingcubes
 BUILDDIR=build
 SRCDIR=src
 GPP=g++
-COMPFLAGS=-I./src
+COMPFLAGS="-I./src $(freetype-config  --cflags)"
 LINKFLAGS=
-LIBFLAGS="-lSDL2 -lSDL2_image -lSDL2_ttf -lGL"
+LIBFLAGS="-lSDL2 -lSDL2_image -lGL $(freetype-config  --libs)"
 
