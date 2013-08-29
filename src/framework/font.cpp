@@ -23,7 +23,9 @@ Font::Font (string filename, unsigned long size)
 	if (FT_Set_Char_Size (face, size*64, size*64, 0, 0))
 		throw Error ( string ("FT_Set_Char_Size: ") + string ("") );
 	
-	max_height = 0;
+	max_bearing = 0;
+	int min_bearing = 0;
+	int min_bearing_glyph_rows = 0;
 	for (char c = '\x20'; c < '\x7f'; ++ c) {
 		int i = (int)c-(int)'\x20';
 		FT_UInt glyph_index = FT_Get_Char_Index (face, c);
@@ -37,13 +39,27 @@ Font::Font (string filename, unsigned long size)
 		}
 		
 		FT_Bitmap *bmp = &face->glyph->bitmap;
+		
+		max_bearing = max (max_bearing, face->glyph->bitmap_top);
+		if (
+			face->glyph->bitmap_top < min_bearing ||
+			(face->glyph->bitmap_top == min_bearing && min_bearing_glyph_rows < bmp->rows) )
+		{
+			min_bearing_glyph_rows = bmp->rows;
+			min_bearing = face->glyph->bitmap_top;
+		}
 
-		ascii_bitmaps [i] = new GrayBitmap (bmp->pitch, bmp->width, bmp->rows);
+		ascii_bitmaps [i] = new GlyphBmp (
+			bmp->pitch,
+			bmp->width,
+			bmp->rows,
+			face->glyph->bitmap_left,
+			face->glyph->bitmap_top,
+			face->glyph->advance.x / 64);
 		memcpy (ascii_bitmaps [i]->data, bmp->buffer,
 			bmp->pitch * bmp->rows * sizeof (unsigned char));
-		
-		max_height = max (max_height, bmp->rows);
 	}
+	max_height = min_bearing_glyph_rows + max_bearing - min_bearing;
 }
 
 Font::~Font ()
@@ -54,48 +70,8 @@ Font::~Font ()
 	}
 }
 
-GLTexture *Font::render_text (string text, RGB color)
-{
-	int text_width = 0;
-	
-	for (string::iterator i = text.begin();
-		i != text.end (); ++i)
-	{
-		int index = (int)(*i)-(int)'\x20';
-		text_width += ascii_bitmaps [index]->width;
-	}
-	
-	int pw = power2_expanded (text_width);
-	int ph = power2_expanded (max_height);
-	
-	unsigned char *pixdata = new unsigned char [pw * ph * 4];
-	unsigned int pen = 0;
-	for (string::iterator i = text.begin();
-		i != text.end (); ++i)
-	{
-		int index = (int)(*i)-(int)'\x20';
-		GrayBitmap *bmp = ascii_bitmaps [index];
-		for (int row = 0; row < bmp->rows; row ++) {
-			unsigned char *srcptr = bmp->data + row * bmp->pitch;
-			unsigned char *destptr = pixdata + (row * pw + pen)*4;
-			for (int col = 0; col < bmp->width; col ++) {
-				destptr [0] = color.r;
-				destptr [1] = color.g;
-				destptr [2] = color.b;
-				destptr [3] = srcptr [0];
-				destptr += 4;
-				srcptr ++;
-			}
-		}
-		pen += bmp->width;
-	}
-	
-	GLTexture *gltexture = new GLTexture (pixdata, text_width, max_height);
-	
-	return gltexture;
-}
-
-Font::GrayBitmap::GrayBitmap (int pitch, int width, int rows)
+Font::GlyphBmp::GlyphBmp (int pitch, int width, int rows, int left, int top, int advance)
+	: left(left), top(top), advance(advance)
 {
 	this->pitch = pitch;
 	this->width = width;
@@ -104,7 +80,7 @@ Font::GrayBitmap::GrayBitmap (int pitch, int width, int rows)
 	data = new unsigned char [datalen];
 }
 
-Font::GrayBitmap::~GrayBitmap ()
+Font::GlyphBmp::~GlyphBmp ()
 {
 	delete data;
 }

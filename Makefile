@@ -7,8 +7,8 @@ rebuild : clean all
 clean :
 	-rm build/*
 
-build/computingcubes :  build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/gltexture.o build/utils.o build/main.o
-	g++ -o build/computingcubes   build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/gltexture.o build/utils.o build/main.o -lSDL2 -lSDL2_image -lGL -L/usr/lib/x86_64-linux-gnu -lfreetype -lz
+build/computingcubes :  build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/utils.o build/main.o
+	g++ -o build/computingcubes   build/computingcubes.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/utils.o build/main.o -lSDL2 -lSDL2_image -lGL -L/usr/lib/x86_64-linux-gnu -lfreetype -lz
 
 build/computingcubes.o : src/computingcubes.cpp
 	g++ -o build/computingcubes.o -I./src -I/usr/include/freetype2 -c src/computingcubes.cpp
@@ -33,6 +33,9 @@ build/glapplication.o : src/framework/opengl/glapplication.cpp
 
 build/gldisplay.o : src/framework/opengl/gldisplay.cpp
 	g++ -o build/gldisplay.o -I./src -I/usr/include/freetype2 -c src/framework/opengl/gldisplay.cpp
+
+build/glfont.o : src/framework/opengl/glfont.cpp
+	g++ -o build/glfont.o -I./src -I/usr/include/freetype2 -c src/framework/opengl/glfont.cpp
 
 build/gltexture.o : src/framework/opengl/gltexture.cpp
 	g++ -o build/gltexture.o -I./src -I/usr/include/freetype2 -c src/framework/opengl/gltexture.cpp

@@ -5,7 +5,7 @@
 #include "framework/opengl/glapplication.h"
 
 struct GLTexture;
-struct Font;
+struct GLFont;
 
 struct ComputingCubes : GLApplication
 {
@@ -14,7 +14,7 @@ struct ComputingCubes : GLApplication
 	void draw_scene ();
 	
 	GLTexture *testtex;
-	Font *myfont;
+	GLFont *myfont;
 };
 
 #endif // computingcubes_H

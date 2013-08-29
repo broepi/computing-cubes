@@ -11,26 +11,27 @@
 using namespace std;
 
 struct GLTexture;
-struct GrayBitmap;
 
 struct Font
 {
-	struct GrayBitmap
+	struct GlyphBmp
 	{
-		GrayBitmap (int pitch, int width, int rows);
-		~GrayBitmap ();
+		GlyphBmp (int pitch, int width, int rows, int left, int top, int advance);
+		~GlyphBmp ();
 		
 		int datalen, pitch, width, rows;
+		int left, top; // left and top bearing
+		int advance;
 		unsigned char *data;
 	};
 
 	Font (string filename, unsigned long size);
 	~Font ();
-	GLTexture *render_text (string text, RGB color);
 	
 	FT_Face face;
-	GrayBitmap *ascii_bitmaps [128-32];
+	GlyphBmp *ascii_bitmaps [128-32];
 	int max_height;
+	int max_bearing;
 };
 
 #endif
