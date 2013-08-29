@@ -26,8 +26,8 @@ Font::Font (string filename, unsigned long size)
 	max_bearing = 0;
 	int min_bearing = 0;
 	int min_bearing_glyph_rows = 0;
-	for (char c = '\x20'; c < '\x7f'; ++ c) {
-		int i = (int)c-(int)'\x20';
+	for (unsigned int c = 0x20; c <= 0xff; ++ c) {
+		unsigned int i = c - 0x20;
 		FT_UInt glyph_index = FT_Get_Char_Index (face, c);
 		
 		if (FT_Load_Glyph (face, glyph_index, FT_LOAD_DEFAULT))
@@ -64,8 +64,8 @@ Font::Font (string filename, unsigned long size)
 
 Font::~Font ()
 {
-	for (char c = '\x20'; c < '\x7f'; ++ c) {
-		int i = (int)c-(int)'\x20';
+	for (unsigned int c = 0x20; c <= 0xff; ++ c) {
+		unsigned int i = c - 0x20;
 		delete ascii_bitmaps [i];
 	}
 }

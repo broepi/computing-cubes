@@ -29,7 +29,7 @@ struct Font
 	~Font ();
 	
 	FT_Face face;
-	GlyphBmp *ascii_bitmaps [128-32];
+	GlyphBmp *ascii_bitmaps [256-32];
 	int max_height;
 	int max_bearing;
 };

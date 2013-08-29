@@ -9,6 +9,7 @@
 using namespace std;
 
 int power2_expanded (int input);
+unsigned int getch_utf8 (unsigned char **strptr);
 
 struct RGB : SDL_Color
 {

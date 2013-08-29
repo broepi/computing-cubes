@@ -1,6 +1,7 @@
 
 #include "framework/opengl/glfont.h"
 #include "framework/opengl/gltexture.h"
+#include "framework/utils.h"
 
 GLFont::GLFont (string filename, unsigned long size)
 	: Font (filename, size)
@@ -10,11 +11,12 @@ GLFont::GLFont (string filename, unsigned long size)
 GLTexture *GLFont::render_text (string text, RGB color)
 {
 	int text_width = 0;
+	const char *cstr;
 	
-	for (string::iterator i = text.begin();
-		i != text.end (); ++i)
-	{
-		int index = (int)(*i)-(int)'\x20';
+	cstr = text.c_str ();
+	while (*cstr) {
+		unsigned int unicode = getch_utf8 ((unsigned char**)&cstr);
+		int index = unicode - '\x20';
 		text_width += ascii_bitmaps [index]->advance;
 	}
 	
@@ -24,10 +26,11 @@ GLTexture *GLFont::render_text (string text, RGB color)
 	unsigned char *pixdata = new unsigned char [pw * ph * 4];
 	memset (pixdata, 0, pw * ph * 4);
 	unsigned int pen = 0;
-	for (string::iterator i = text.begin();
-		i != text.end (); ++i)
-	{
-		int index = (int)(*i)-(int)'\x20';
+	
+	cstr = text.c_str ();
+	while (*cstr) {
+		unsigned int unicode = getch_utf8 ((unsigned char**)&cstr);
+		int index = unicode - '\x20';
 		GlyphBmp *bmp = ascii_bitmaps [index];
 		int glyph_offsx = bmp->left;
 		int glyph_offsy = max_bearing - bmp->top;
