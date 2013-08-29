@@ -14,7 +14,7 @@ struct ComputingCubes : GLApplication
 	void draw_scene ();
 	
 	GLTexture *testtex;
-	GLFont *myfont;
+	GLFont *ubuntumono_font;
 };
 
 #endif // computingcubes_H

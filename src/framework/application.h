@@ -19,6 +19,8 @@ struct Application : EventManager::Handler
 	bool verbose;
 	bool running;
 	double fps_target;
+	double fps_measured;
+	unsigned long performance_frequency;
 	EventManager *eventmanager;
 };
 

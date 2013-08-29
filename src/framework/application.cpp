@@ -8,11 +8,14 @@ Application::Application ()
 	verbose = true;
 	running = false;
 	fps_target = 60.0;
+	fps_measured = 0.0;
 	
 	dbglog << "framework: Application ()\n";
 	
 	if (SDL_Init (SDL_INIT_VIDEO) != 0)
 		throw Error ( string ("SDL_Init: ") + string (SDL_GetError ()) );
+	
+	performance_frequency = SDL_GetPerformanceFrequency ();
 	
 	eventmanager = new EventManager ();
 	eventmanager->add_handler (SDL_QUIT, this);
@@ -25,7 +28,7 @@ Application::~Application ()
 
 void Application::run ()
 {
-	Uint32 lasttick = 0, curtick = 0;
+	Uint64 lasttick = 0, curtick = 0;
 	
 	dbglog << "Application.run\n";
 	
@@ -35,8 +38,9 @@ void Application::run ()
 		while (SDL_PollEvent (&event) == 1) {
 			eventmanager->route_event (&event);
 		}
-		curtick = SDL_GetTicks ();
-		if (curtick-lasttick >= 1000.0/fps_target) {
+		curtick = SDL_GetPerformanceCounter ();
+		if (curtick-lasttick >= (double)performance_frequency / fps_target) {
+			fps_measured = (double) performance_frequency / (curtick-lasttick);
 			lasttick = curtick;
 			display_clear ();
 			draw_scene ();

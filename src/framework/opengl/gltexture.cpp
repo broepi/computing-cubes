@@ -123,3 +123,21 @@ void GLTexture::draw ()
 	glEnd ();
 }
 
+void GLTexture::drawx (int x, int y)
+{
+	glEnable (GL_TEXTURE_2D);
+	glEnable (GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBindTexture (GL_TEXTURE_2D, gltexname);
+	glBegin (GL_QUADS);
+	glTexCoord2d (0.0, 0.0);
+	glVertex3d (x, y, 0.0);
+	glTexCoord2d (u,   0.0);
+	glVertex3d (x+w, y, 0.0);
+	glTexCoord2d (u,   v);
+	glVertex3d (x+w, y+h, 0.0);
+	glTexCoord2d (0.0, v);
+	glVertex3d (x, y+h, 0.0);
+	glEnd ();
+}
+

@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <sstream>
 #include "computingcubes.h"
 #include "framework/opengl/gltexture.h"
 #include "framework/opengl/gldisplay.h"
@@ -11,7 +12,7 @@ ComputingCubes::ComputingCubes ()
 	: GLApplication ()
 {
 	testtex = new GLTexture ("images/proteus.png");
-	myfont = new GLFont ("fonts/UbuntuMono-R.ttf", 16);
+	ubuntumono_font = new GLFont ("fonts/UbuntuMono-R.ttf", 16);
 }
 
 ComputingCubes::~ComputingCubes ()
@@ -22,8 +23,10 @@ ComputingCubes::~ComputingCubes ()
 void ComputingCubes::draw_scene ()
 {
 	display->toggle_screen_drawmode ();
-	testtex->draw ();
-	GLTexture *text = myfont->render_text ("Hello World! 0123456789", RGB (0,255,255));
-	text->draw ();
-	delete text;
+	testtex->drawx (10, 30);
+	stringstream fps_label;
+	fps_label << "Framerate: " << fps_measured;
+	GLTexture *fps_label_tex = ubuntumono_font->render_text (fps_label.str(), RGB (0,255,255));
+	fps_label_tex->drawx (10, 10);
+	delete fps_label_tex;
 }

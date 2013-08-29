@@ -19,6 +19,7 @@ struct GLTexture : GLDrawable
 	~GLTexture ();
 	void _load_surface (SDL_Surface *surf);
 	void draw ();
+	void drawx (int x, int y);
 
 	int w, h; // pixel sizes
 	int cols, rows; // number of frame cols and rows
