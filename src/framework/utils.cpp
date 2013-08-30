@@ -55,3 +55,4 @@ Logger::Logger ()
 {
 	enabled = true;
 }
+
