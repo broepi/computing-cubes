@@ -29,7 +29,7 @@ function objectrule
 	
 	objdeps=$(deps $srcname)
 	
-	echo -n "$objname : $objdeps\n"
+	echo -n "$objname : $srcname $objdeps\n"
 	echo -n "\t$GPP -o $objname $COMPFLAGS -c $srcname\n"
 	echo -n "\n"
 }

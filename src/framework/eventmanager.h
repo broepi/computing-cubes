@@ -19,9 +19,12 @@ struct EventManager
 	~EventManager ();
 	void add_handler (Uint32, Handler*);
 	void remove_handler (Uint32, Handler*);
-	void route_event (SDL_Event*);
+	void add_universal_handler (Handler*);
+	void remove_universal_handler (Handler*);
+	void update ();
 	
 	map<Uint32,set<Handler*> > handlermap;
+	set<Handler*> universalhandlers;
 };
 
 #endif // EVENTMANAGER

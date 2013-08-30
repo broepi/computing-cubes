@@ -2,6 +2,7 @@
 #include "framework/application.h"
 #include "framework/utils.h"
 #include "framework/error.h"
+#include "framework/stage.h"
 
 Application::Application ()
 {
@@ -9,6 +10,7 @@ Application::Application ()
 	running = false;
 	fps_target = 60.0;
 	fps_measured = 0.0;
+	cur_stage = &null_stage;
 	
 	dbglog << "framework: Application ()\n";
 	
@@ -34,16 +36,14 @@ void Application::run ()
 	
 	running = true;
 	while (running) {
-		SDL_Event event;
-		while (SDL_PollEvent (&event) == 1) {
-			eventmanager->route_event (&event);
-		}
+		eventmanager->update ();
+		cur_stage->update ();
 		curtick = SDL_GetPerformanceCounter ();
 		if (curtick-lasttick >= (double)performance_frequency / fps_target) {
 			fps_measured = (double) performance_frequency / (curtick-lasttick);
 			lasttick = curtick;
 			display_clear ();
-			draw_scene ();
+			cur_stage->draw_scene ();
 			display_present ();
 		}
 	}

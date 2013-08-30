@@ -5,6 +5,8 @@
 #include <SDL2/SDL.h>
 #include "framework/eventmanager.h"
 
+struct Stage;
+
 // abstract class
 struct Application : EventManager::Handler
 {
@@ -14,12 +16,12 @@ struct Application : EventManager::Handler
 	void on_event (SDL_Event *);
 	virtual void display_clear () = 0;
 	virtual void display_present () = 0;
-	virtual void draw_scene () = 0;
 	
 	bool verbose;
 	bool running;
 	double fps_target;
 	double fps_measured;
+	Stage *cur_stage;
 	unsigned long performance_frequency;
 	EventManager *eventmanager;
 };
