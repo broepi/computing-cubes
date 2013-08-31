@@ -9,6 +9,8 @@
 
 using namespace std;
 
+struct Camera;
+
 struct GLDisplay : Display
 {
 	GLDisplay (string wndname = "One of those windows", int w = 800, int h = 600);
@@ -16,8 +18,9 @@ struct GLDisplay : Display
 	void on_event (SDL_Event *);
 	void clear ();
 	void present ();
-	void toggle_screen_drawmode ();
-	 
+	void activate_screen_drawmode ();
+	void activate_world_drawmode (Camera *cam);
+	
 	SDL_Window *window;
 	SDL_GLContext glcontext;
 };

@@ -17,7 +17,6 @@ struct Application : EventManager::Handler
 	virtual void display_clear () = 0;
 	virtual void display_present () = 0;
 	
-	bool verbose;
 	bool running;
 	double fps_target;
 	double fps_measured;

@@ -6,6 +6,8 @@
 
 struct ComputingCubes;
 struct GLTexture;
+struct GLCoordAxis;
+struct FirstPersonCamera;
 
 struct IngameStage : Stage
 {
@@ -17,6 +19,8 @@ struct IngameStage : Stage
 	
 	ComputingCubes *app;
 	GLTexture *testtex;
+	GLCoordAxis *axis;
+	FirstPersonCamera *playercam;
 };
 
 #endif // INGAMESTAGE_H

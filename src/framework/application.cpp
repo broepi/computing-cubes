@@ -6,7 +6,6 @@
 
 Application::Application ()
 {
-	verbose = true;
 	running = false;
 	fps_target = 60.0;
 	fps_measured = 0.0;

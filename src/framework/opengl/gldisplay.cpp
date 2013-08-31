@@ -1,5 +1,6 @@
 
 #include "framework/opengl/gldisplay.h"
+#include "framework/opengl/camera.h"
 #include "framework/error.h"
 #include "framework/utils.h"
 
@@ -42,8 +43,7 @@ void GLDisplay::on_event (SDL_Event *event)
 void GLDisplay::clear ()
 {
 	glClearColor (0, 0.5, 0.5, 1);
-	//glClearColor (1, 1, 1, 1);
-	glClear (GL_COLOR_BUFFER_BIT);
+	glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void GLDisplay::present ()
@@ -51,7 +51,7 @@ void GLDisplay::present ()
 	SDL_GL_SwapWindow (window);
 }
 
-void GLDisplay::toggle_screen_drawmode ()
+void GLDisplay::activate_screen_drawmode ()
 {
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
@@ -62,3 +62,10 @@ void GLDisplay::toggle_screen_drawmode ()
 
 	glDisable (GL_DEPTH_TEST);
 }
+
+void GLDisplay::activate_world_drawmode (Camera *cam)
+{
+	cam->load ();
+	glEnable (GL_DEPTH_TEST);
+}
+

@@ -1,0 +1,57 @@
+#!/bin/bash
+
+input=$1
+baseinput=$2
+
+lowerpath=$(echo $input | tr '[A-Z]' '[a-z]')
+classname=$(echo $input | gawk '{gsub(/\//," ");print $NF}')
+uppername=$(echo $classname | tr '[a-z]' '[A-Z]')
+lowername=$(echo $classname | tr '[A-Z]' '[a-z]')
+cpath=src/$lowerpath.cpp
+hpath=src/$lowerpath.h
+incpath=$lowerpath.h
+guardname=${uppername}_H
+
+if [ -n "$baseinput" ]
+then
+	baselowerpath=$(echo $baseinput | tr '[A-Z]' '[a-z]')
+	baseclassname=$(echo $baseinput | gawk '{gsub(/\//," ");print $NF}')
+	basehpath=src/$baselowerpath.h
+	baseincpath=$baselowerpath.h
+fi
+
+> $hpath
+echo -e "" >> $hpath
+echo -e "#ifndef $guardname" >> $hpath
+echo -e "#define $guardname" >> $hpath
+echo -e "" >> $hpath
+if [ -n "$baseinput" ]
+then
+	echo -e "#include \"$baseincpath\"" >> $hpath
+	echo -e "" >> $hpath
+	echo -e "struct $classname : $baseclassname" >> $hpath
+else
+	echo -e "struct $classname" >> $hpath
+fi
+echo -e "{" >> $hpath
+echo -e "\t$classname ();" >> $hpath
+echo -e "\t~$classname ();" >> $hpath
+echo -e "};" >> $hpath
+echo -e "" >> $hpath
+echo -e "#endif // $guardname" >> $hpath
+echo -e "" >> $hpath
+
+> $cpath
+echo -e "" >> $cpath
+echo -e "#include \"$incpath\"" >> $cpath
+echo -e "#include \"framework/utils.h\"" >> $cpath
+echo -e "" >> $cpath
+echo -e "$classname::$classname ()" >> $cpath
+echo -e "{" >> $cpath
+echo -e "}" >> $cpath
+echo -e "" >> $cpath
+echo -e "$classname::~$classname ()" >> $cpath
+echo -e "{" >> $cpath
+echo -e "}" >> $cpath
+echo -e "" >> $cpath
+
