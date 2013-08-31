@@ -7,8 +7,8 @@ rebuild : clean all
 clean :
 	-rm build/*
 
-build/computingcubes :  build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o
-	g++ -o build/computingcubes   build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o -lSDL2 -lSDL2_image -lGL -lGLU $(shell freetype-config  --libs)
+build/computingcubes :  build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkstore.o
+	g++ -o build/computingcubes   build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkstore.o -lSDL2 -lSDL2_image -lGL -lGLU $(shell freetype-config  --libs)
 
 build/computingcubes.o : src/computingcubes.cpp src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/ingamestage.h src/framework/stage.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/display.h src/framework/opengl/glfont.h src/framework/font.h src/framework/utils.h
 	g++ -o build/computingcubes.o -I./src $(shell freetype-config --cflags) -c src/computingcubes.cpp
@@ -66,5 +66,8 @@ build/main.o : src/main.cpp src/computingcubes.h src/framework/opengl/glapplicat
 
 build/chunk.o : src/voxels/chunk.cpp src/voxels/chunk.h src/framework/utils.h
 	g++ -o build/chunk.o -I./src $(shell freetype-config --cflags) -c src/voxels/chunk.cpp
+
+build/chunkstore.o : src/voxels/chunkstore.cpp src/voxels/chunkstore.h src/framework/utils.h
+	g++ -o build/chunkstore.o -I./src $(shell freetype-config --cflags) -c src/voxels/chunkstore.cpp
 
 

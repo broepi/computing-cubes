@@ -1,13 +1,21 @@
 
 #include <iostream>
-#include "computingcubes.h"
 #include "framework/error.h"
 #include "framework/utils.h"
+#include "computingcubes.h"
+#include "voxels/chunk.h"
+#include "voxels/chunkstore.h"
 
 using namespace std;
 
 int main (int argc, char *argv[])
 {
+
+	Chunk testchunk;
+	ChunkStore teststore;
+	
+	cout << CHUNKSIZE << endl;
+
 	ComputingCubes *ccapp;
 	
 	dbglog.enabled = true;
