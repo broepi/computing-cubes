@@ -12,19 +12,19 @@ struct EventManager
 {
 	struct Handler
 	{
-		virtual void on_event (SDL_Event *event) = 0;
+		virtual void onEvent (SDL_Event *event) = 0;
 	};
 	
 	EventManager ();
 	~EventManager ();
-	void add_handler (Uint32, Handler*);
-	void remove_handler (Uint32, Handler*);
-	void add_universal_handler (Handler*);
-	void remove_universal_handler (Handler*);
+	void addHandler (Uint32, Handler*);
+	void removeHandler (Uint32, Handler*);
+	void addUniversalHandler (Handler*);
+	void removeUniversalHandler (Handler*);
 	void update ();
 	
-	map<Uint32,set<Handler*> > handlermap;
-	set<Handler*> universalhandlers;
+	map<Uint32,set<Handler*> > handlerMap;
+	set<Handler*> universalHandlers;
 };
 
 #endif // EVENTMANAGER

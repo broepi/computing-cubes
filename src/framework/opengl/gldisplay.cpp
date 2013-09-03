@@ -17,22 +17,22 @@ GLDisplay::GLDisplay (string wndname, int w, int h)
 	if (window == 0)
 		throw Error ( string ("SDL_CreateWindow: ") + string (SDL_GetError ()) );
 	
-	glcontext = SDL_GL_CreateContext (window);
+	glContext = SDL_GL_CreateContext (window);
 	
-	if (glcontext == 0)
+	if (glContext == 0)
 		throw Error ( string ("SDL_GL_CreateContext: ") + string (SDL_GetError ()) );
 }
 
 GLDisplay::~GLDisplay ()
 {
-	SDL_GL_DeleteContext (glcontext);
+	SDL_GL_DeleteContext (glContext);
 	SDL_DestroyWindow (window);
 	this->Display::~Display ();
 }
 
-void GLDisplay::on_event (SDL_Event *event)
+void GLDisplay::onEvent (SDL_Event *event)
 {
-	this->Display::on_event (event);
+	this->Display::onEvent (event);
 	if (event->type == SDL_WINDOWEVENT) {
 		if (event->window.event == SDL_WINDOWEVENT_RESIZED) {
 			glViewport (0, 0, w, h);
@@ -51,7 +51,7 @@ void GLDisplay::present ()
 	SDL_GL_SwapWindow (window);
 }
 
-void GLDisplay::activate_screen_drawmode ()
+void GLDisplay::activateScreenDrawMode ()
 {
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
@@ -63,7 +63,7 @@ void GLDisplay::activate_screen_drawmode ()
 	glDisable (GL_DEPTH_TEST);
 }
 
-void GLDisplay::activate_world_drawmode (Camera *cam)
+void GLDisplay::activateWorldDrawMode (Camera *cam)
 {
 	cam->load ();
 	glEnable (GL_DEPTH_TEST);

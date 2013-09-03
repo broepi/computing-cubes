@@ -15,12 +15,15 @@ struct IngameStage : Stage
 	~IngameStage ();
 	
 	void update ();
-	void draw_scene ();
+	void drawScene ();
 	
 	ComputingCubes *app;
-	GLTexture *testtex;
+	GLTexture *testTex;
 	GLCoordAxis *axis;
-	FirstPersonCamera *playercam;
+	FirstPersonCamera *playerCam;
+	
+	// Textures
+	GLTexture *terrainTex;
 };
 
 #endif // INGAMESTAGE_H

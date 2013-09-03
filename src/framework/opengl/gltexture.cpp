@@ -18,7 +18,7 @@ GLTexture::GLTexture (string filename, int cols, int rows)
 	if (surf == 0)
 		throw Error ( string ("IMG_Load: ") + string (IMG_GetError ()) );
 	
-	_load_surface (surf);
+	loadSurface (surf);
 	
 	SDL_FreeSurface (surf);
 }
@@ -26,7 +26,7 @@ GLTexture::GLTexture (string filename, int cols, int rows)
 GLTexture::GLTexture (SDL_Surface *surf, int cols, int rows)
 	: cols (cols), rows (rows)
 {
-	_load_surface (surf);
+	loadSurface (surf);
 }
 
 GLTexture::GLTexture (unsigned char *data, int w, int h, int cols, int rows)
@@ -34,8 +34,8 @@ GLTexture::GLTexture (unsigned char *data, int w, int h, int cols, int rows)
 {
 	this->w = w;
 	this->h = h;
-	pw = power2_expanded (w);
-	ph = power2_expanded (h);
+	pw = power2Expanded (w);
+	ph = power2Expanded (h);
 	fw = w / cols;
 	fh = h / rows;
 	u = (double)w/pw;
@@ -57,18 +57,18 @@ GLTexture::~GLTexture ()
 	glDeleteTextures (1, &gltexname);
 }
 
-void GLTexture::_load_surface (SDL_Surface *surf)
+void GLTexture::loadSurface (SDL_Surface *surf)
 {
 	w = surf->w;
 	h = surf->h;
-	pw = power2_expanded (w);
-	ph = power2_expanded (h);
+	pw = power2Expanded (w);
+	ph = power2Expanded (h);
 	fw = w / cols;
 	fh = h / rows;
 	u = (double)w/pw;
 	v = (double)h/ph;
 	
-	SDL_Surface *tmpsurf = SDL_CreateRGBSurface (0, pw, ph, 32,
+	SDL_Surface *tmpSurf = SDL_CreateRGBSurface (0, pw, ph, 32,
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 		0x000000FF,
 		0x0000FF00,
@@ -82,14 +82,14 @@ void GLTexture::_load_surface (SDL_Surface *surf)
 #endif
 		);
 	
-	if (tmpsurf == 0)
+	if (tmpSurf == 0)
 		throw Error ( string ("SDL_CreateRGBSurface: ") + string (SDL_GetError ()) );
 
 	SDL_SetSurfaceAlphaMod (surf, 0xff);
 	SDL_SetSurfaceBlendMode (surf, SDL_BLENDMODE_NONE);
 	
 	SDL_Rect rect = {0, 0, w, h};
-	SDL_BlitSurface (surf, &rect, tmpsurf, &rect);
+	SDL_BlitSurface (surf, &rect, tmpSurf, &rect);
 	
 	glGenTextures (1, &gltexname);
 	
@@ -100,17 +100,17 @@ void GLTexture::_load_surface (SDL_Surface *surf)
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, pw, ph, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-		tmpsurf->pixels);
+		tmpSurf->pixels);
 
-	SDL_FreeSurface (tmpsurf);
+	SDL_FreeSurface (tmpSurf);
 }
 
 void GLTexture::draw ()
 {
-	drawx (0,0);
+	drawEx (0,0);
 }
 
-void GLTexture::drawx (int x, int y)
+void GLTexture::drawEx (int x, int y)
 {
 	glEnable (GL_TEXTURE_2D);
 	glEnable (GL_BLEND);

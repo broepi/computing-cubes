@@ -19,19 +19,19 @@ struct Font
 		GlyphBmp (int pitch, int width, int rows, int left, int top, int advance);
 		~GlyphBmp ();
 		
-		int datalen, pitch, width, rows;
+		int dataLen, pitch, width, rows;
 		int left, top; // left and top bearing
 		int advance;
 		unsigned char *data;
 	};
 
-	Font (string filename, unsigned long size);
+	Font (string fileName, unsigned long size);
 	~Font ();
 	
 	FT_Face face;
-	GlyphBmp *ascii_bitmaps [256-32];
-	int max_height;
-	int max_bearing;
+	GlyphBmp *asciiBitmaps [256-32];
+	int maxHeight;
+	int maxBearing;
 };
 
 #endif

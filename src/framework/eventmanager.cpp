@@ -9,24 +9,24 @@ EventManager::~EventManager ()
 {
 }
 
-void EventManager::add_handler (Uint32 eventid, Handler *handler)
+void EventManager::addHandler (Uint32 eventId, Handler *handler)
 {
-	handlermap[eventid].insert (handler);
+	handlerMap[eventId].insert (handler);
 }
 
-void EventManager::remove_handler (Uint32 eventid, Handler *handler)
+void EventManager::removeHandler (Uint32 eventId, Handler *handler)
 {
-	handlermap[eventid].erase (handler);
+	handlerMap[eventId].erase (handler);
 }
 
-void EventManager::add_universal_handler (Handler *handler)
+void EventManager::addUniversalHandler (Handler *handler)
 {
-	universalhandlers.insert (handler);
+	universalHandlers.insert (handler);
 }
 
-void EventManager::remove_universal_handler (Handler *handler)
+void EventManager::removeUniversalHandler (Handler *handler)
 {
-	universalhandlers.erase (handler);
+	universalHandlers.erase (handler);
 }
 
 void EventManager::update ()
@@ -34,16 +34,16 @@ void EventManager::update ()
 	SDL_Event event;
 
 	while (SDL_PollEvent (&event) == 1) {
-		for (set<Handler*>::iterator i = handlermap[event.type].begin ();
-			i != handlermap[event.type].end (); ++ i )
+		for (set<Handler*>::iterator i = handlerMap[event.type].begin ();
+			i != handlerMap[event.type].end (); ++ i )
 		{
-			(*i)->on_event (&event);
+			(*i)->onEvent (&event);
 		}
 		
-		for (set<Handler*>::iterator i = universalhandlers.begin ();
-			i != universalhandlers.end (); ++ i )
+		for (set<Handler*>::iterator i = universalHandlers.begin ();
+			i != universalHandlers.end (); ++ i )
 		{
-			(*i)->on_event (&event);
+			(*i)->onEvent (&event);
 		}
 	}
 }

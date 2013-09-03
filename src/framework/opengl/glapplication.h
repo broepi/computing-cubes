@@ -10,8 +10,8 @@ struct GLApplication : Application
 {
 	GLApplication ();
 	~GLApplication ();
-	void display_clear ();
-	void display_present ();
+	void displayClear ();
+	void displayPresent ();
 	
 	GLDisplay *display;
 };

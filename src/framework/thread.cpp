@@ -2,10 +2,10 @@
 #include "framework/thread.h"
 #include "framework/utils.h"
 
-int thread_entry (void *ptr)
+int threadEntry (void *ptr)
 {
-	Thread *threadinst = (Thread*)ptr;
-	threadinst->run ();
+	Thread *threadInst = (Thread*)ptr;
+	threadInst->run ();
 }
 
 Thread::Thread (string name)
@@ -22,6 +22,6 @@ Thread::~Thread ()
 void Thread::start ()
 {
 	running = true;
-	thread = SDL_CreateThread (thread_entry, name.c_str(), this);
+	thread = SDL_CreateThread (threadEntry, name.c_str(), this);
 }
 

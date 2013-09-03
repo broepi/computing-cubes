@@ -5,10 +5,10 @@
 struct Stage
 {
 	virtual void update () {};
-	virtual void draw_scene () {};
+	virtual void drawScene () {};
 };
 
-extern Stage null_stage;
+extern Stage nullStage;
 
 #endif // STAGE_H
 

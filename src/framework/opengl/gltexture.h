@@ -17,9 +17,8 @@ struct GLTexture : GLDrawable
 	GLTexture (SDL_Surface *surf, int cols = 1, int rows = 1);
 	GLTexture (unsigned char *data, int w, int h, int cols = 1, int rows = 1);
 	~GLTexture ();
-	void _load_surface (SDL_Surface *surf);
 	void draw ();
-	void drawx (int x, int y);
+	void drawEx (int x, int y);
 
 	int w, h; // pixel sizes
 	int cols, rows; // number of frame cols and rows
@@ -27,6 +26,9 @@ struct GLTexture : GLDrawable
 	int pw, ph; // pysical (power2) pixel sizes
 	double u, v;
 	GLuint gltexname;
+
+private:
+	void loadSurface (SDL_Surface *surf);
 };
 
 #endif

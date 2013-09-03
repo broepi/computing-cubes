@@ -2,9 +2,9 @@
 #include <sstream>
 #include "framework/utils.h"
 
-Logger dbglog;
+Logger dbgLog;
 
-int power2_expanded (int input)
+int power2Expanded (int input)
 {
     int value = 1;
 
@@ -14,7 +14,7 @@ int power2_expanded (int input)
     return value;
 }
 
-unsigned int getch_utf8 (unsigned char **strptr)
+unsigned int getchUtf8 (unsigned char **strptr)
 {
 	unsigned char *codeseq = *strptr;
 	if ( (codeseq[0] & 0x80) == 0)

@@ -12,8 +12,8 @@ using namespace std;
 ComputingCubes::ComputingCubes ()
 	: GLApplication ()
 {
-	ubuntumono_font = new GLFont ("fonts/UbuntuMono-R.ttf", 16);
-	cur_stage = new IngameStage (this);
+	ubuntuMonoFont = new GLFont ("fonts/UbuntuMono-R.ttf", 16);
+	curStage = new IngameStage (this);
 }
 
 ComputingCubes::~ComputingCubes ()

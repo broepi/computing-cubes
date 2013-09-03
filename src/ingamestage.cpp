@@ -14,42 +14,46 @@ using namespace std;
 IngameStage::IngameStage (ComputingCubes *app)
 	: app (app)
 {
-	playercam = new FirstPersonCamera (app->display);
-	playercam->x = 0.5;
-	playercam->y = 0.5;
-	playercam->z = -1.0;
-	testtex = new GLTexture ("images/proteus.png");
+	// load textures
+	terrainTex = new GLTexture ("images/terrain.png");
+	
+	playerCam = new FirstPersonCamera (app->display);
+	playerCam->x = 0.5;
+	playerCam->y = 0.5;
+	playerCam->z = -1.0;
+	testTex = new GLTexture ("images/proteus.png");
 	axis = new GLCoordAxis ();
 }
 
 IngameStage::~IngameStage ()
-{
-	delete testtex;
+{	
+	delete testTex;
+	delete terrainTex;
 }
 
 void IngameStage::update ()
 {
 }
 
-void IngameStage::draw_scene ()
+void IngameStage::drawScene ()
 {
-	app->display->activate_world_drawmode (playercam);
+	app->display->activateWorldDrawMode (playerCam);
 
 	axis->draw ();
 	
-	app->display->activate_screen_drawmode ();
+	app->display->activateScreenDrawMode ();
 
-	testtex->drawx (10, 60);
+	testTex->drawEx (10, 60);
 
-	stringstream fps_label;
-	fps_label << "Framerate: " << app->fps_measured;
-	GLTexture *fps_label_tex = app->ubuntumono_font->render_text (fps_label.str(), RGB (0,255,255));
-	fps_label_tex->drawx (10, 10);
-	delete fps_label_tex;
+	stringstream fpsLabel;
+	fpsLabel << "Framerate: " << app->fpsMeasured;
+	GLTexture *fpsLabelTex = app->ubuntuMonoFont->renderText (fpsLabel.str(), RGB (0,255,255));
+	fpsLabelTex->drawEx (10, 10);
+	delete fpsLabelTex;
 
-	GLTexture *label2_tex =
-		app->ubuntumono_font->render_text ("Some german special letters: ÄÖÜäöüß", RGB (255,255,0));
-	label2_tex->drawx (10, 30);
-	delete label2_tex;
+	GLTexture *label2Tex =
+		app->ubuntuMonoFont->renderText ("Some german special letters: ÄÖÜäöüß", RGB (255,255,0));
+	label2Tex->drawEx (10, 30);
+	delete label2Tex;
 }
 

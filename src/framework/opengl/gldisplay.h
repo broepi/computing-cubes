@@ -15,14 +15,14 @@ struct GLDisplay : Display
 {
 	GLDisplay (string wndname = "One of those windows", int w = 800, int h = 600);
 	~GLDisplay ();
-	void on_event (SDL_Event *);
+	void onEvent (SDL_Event *);
 	void clear ();
 	void present ();
-	void activate_screen_drawmode ();
-	void activate_world_drawmode (Camera *cam);
+	void activateScreenDrawMode ();
+	void activateWorldDrawMode (Camera *cam);
 	
 	SDL_Window *window;
-	SDL_GLContext glcontext;
+	SDL_GLContext glContext;
 };
 
 #endif

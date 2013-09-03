@@ -6,7 +6,7 @@ GLApplication::GLApplication ()
 	: Application ()
 {
 	display = new GLDisplay ();
-	eventmanager->add_handler (SDL_WINDOWEVENT, display);
+	eventManager->addHandler (SDL_WINDOWEVENT, display);
 }
 
 GLApplication::~GLApplication ()
@@ -14,12 +14,12 @@ GLApplication::~GLApplication ()
 	delete display;
 }
 
-void GLApplication::display_clear ()
+void GLApplication::displayClear ()
 {
 	display->clear ();
 }
 
-void GLApplication::display_present ()
+void GLApplication::displayPresent ()
 {
 	display->present ();
 }

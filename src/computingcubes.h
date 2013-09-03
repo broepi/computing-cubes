@@ -11,9 +11,9 @@ struct ComputingCubes : GLApplication
 {
 	ComputingCubes ();
 	~ComputingCubes ();
-	void draw_scene ();
+	void drawScene ();
 	
-	GLFont *ubuntumono_font;
+	GLFont *ubuntuMonoFont;
 };
 
 #endif // computingcubes_H

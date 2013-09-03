@@ -7,8 +7,8 @@ rebuild : clean all
 clean :
 	-rm build/*
 
-build/computingcubes :  build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkstore.o
-	g++ -o build/computingcubes   build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkstore.o -lSDL2 -lSDL2_image -lGL -lGLU $(shell freetype-config  --libs)
+build/computingcubes :  build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/vbocomposite.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkmap.o build/world.o
+	g++ -o build/computingcubes   build/computingcubes.o build/firstpersoncamera.o build/application.o build/display.o build/error.o build/eventmanager.o build/font.o build/glapplication.o build/gldisplay.o build/glfont.o build/gltexture.o build/glcoordaxis.o build/vbocomposite.o build/perspectivecamera.o build/stage.o build/thread.o build/utils.o build/ingamestage.o build/main.o build/chunk.o build/chunkmap.o build/world.o -lSDL2 -lSDL2_image -lGL -lGLU $(shell freetype-config  --libs)
 
 build/computingcubes.o : src/computingcubes.cpp src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/ingamestage.h src/framework/stage.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/display.h src/framework/opengl/glfont.h src/framework/font.h src/framework/utils.h
 	g++ -o build/computingcubes.o -I./src $(shell freetype-config --cflags) -c src/computingcubes.cpp
@@ -46,6 +46,9 @@ build/gltexture.o : src/framework/opengl/gltexture.cpp src/framework/opengl/glte
 build/glcoordaxis.o : src/framework/opengl/objects/glcoordaxis.cpp src/framework/opengl/objects/glcoordaxis.h src/framework/opengl/gldrawable.h src/framework/utils.h
 	g++ -o build/glcoordaxis.o -I./src $(shell freetype-config --cflags) -c src/framework/opengl/objects/glcoordaxis.cpp
 
+build/vbocomposite.o : src/framework/opengl/objects/vbocomposite.cpp src/framework/opengl/objects/vbocomposite.h src/framework/utils.h
+	g++ -o build/vbocomposite.o -I./src $(shell freetype-config --cflags) -c src/framework/opengl/objects/vbocomposite.cpp
+
 build/perspectivecamera.o : src/framework/opengl/perspectivecamera.cpp src/framework/opengl/perspectivecamera.h src/framework/opengl/camera.h src/framework/display.h src/framework/eventmanager.h src/framework/utils.h
 	g++ -o build/perspectivecamera.o -I./src $(shell freetype-config --cflags) -c src/framework/opengl/perspectivecamera.cpp
 
@@ -58,16 +61,19 @@ build/thread.o : src/framework/thread.cpp src/framework/thread.h src/framework/u
 build/utils.o : src/framework/utils.cpp src/framework/utils.h
 	g++ -o build/utils.o -I./src $(shell freetype-config --cflags) -c src/framework/utils.cpp
 
-build/ingamestage.o : src/ingamestage.cpp src/ingamestage.h src/framework/stage.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/firstpersoncamera.h src/framework/opengl/perspectivecamera.h src/framework/opengl/camera.h src/framework/display.h src/framework/utils.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/opengl/glfont.h src/framework/font.h src/framework/opengl/objects/glcoordaxis.h
+build/ingamestage.o : src/ingamestage.cpp src/ingamestage.h src/framework/stage.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/firstpersoncamera.h src/framework/opengl/perspectivecamera.h src/framework/opengl/camera.h src/framework/display.h src/world/world.h src/framework/utils.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/opengl/glfont.h src/framework/font.h src/framework/opengl/objects/glcoordaxis.h
 	g++ -o build/ingamestage.o -I./src $(shell freetype-config --cflags) -c src/ingamestage.cpp
 
-build/main.o : src/main.cpp src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/framework/error.h src/framework/utils.h
+build/main.o : src/main.cpp src/framework/error.h src/framework/utils.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h
 	g++ -o build/main.o -I./src $(shell freetype-config --cflags) -c src/main.cpp
 
-build/chunk.o : src/voxels/chunk.cpp src/voxels/chunk.h src/framework/utils.h
-	g++ -o build/chunk.o -I./src $(shell freetype-config --cflags) -c src/voxels/chunk.cpp
+build/chunk.o : src/world/chunk.cpp src/world/chunk.h src/world/world.h src/framework/utils.h
+	g++ -o build/chunk.o -I./src $(shell freetype-config --cflags) -c src/world/chunk.cpp
 
-build/chunkstore.o : src/voxels/chunkstore.cpp src/voxels/chunkstore.h src/framework/utils.h
-	g++ -o build/chunkstore.o -I./src $(shell freetype-config --cflags) -c src/voxels/chunkstore.cpp
+build/chunkmap.o : src/world/chunkmap.cpp src/world/chunkmap.h src/world/world.h src/framework/utils.h
+	g++ -o build/chunkmap.o -I./src $(shell freetype-config --cflags) -c src/world/chunkmap.cpp
+
+build/world.o : src/world/world.cpp src/world/world.h
+	g++ -o build/world.o -I./src $(shell freetype-config --cflags) -c src/world/world.cpp
 
 

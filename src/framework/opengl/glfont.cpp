@@ -8,20 +8,20 @@ GLFont::GLFont (string filename, unsigned long size)
 {
 }
 
-GLTexture *GLFont::render_text (string text, RGB color)
+GLTexture *GLFont::renderText (string text, RGB color)
 {
-	int text_width = 0;
+	int textWidth = 0;
 	const char *cstr;
 	
 	cstr = text.c_str ();
 	while (*cstr) {
-		unsigned int unicode = getch_utf8 ((unsigned char**)&cstr);
+		unsigned int unicode = getchUtf8 ((unsigned char**)&cstr);
 		int index = unicode - '\x20';
-		text_width += ascii_bitmaps [index]->advance;
+		textWidth += asciiBitmaps [index]->advance;
 	}
 	
-	int pw = power2_expanded (text_width);
-	int ph = power2_expanded (max_height);
+	int pw = power2Expanded (textWidth);
+	int ph = power2Expanded (maxHeight);
 	
 	unsigned char *pixdata = new unsigned char [pw * ph * 4];
 	memset (pixdata, 0, pw * ph * 4);
@@ -29,14 +29,14 @@ GLTexture *GLFont::render_text (string text, RGB color)
 	
 	cstr = text.c_str ();
 	while (*cstr) {
-		unsigned int unicode = getch_utf8 ((unsigned char**)&cstr);
+		unsigned int unicode = getchUtf8 ((unsigned char**)&cstr);
 		int index = unicode - '\x20';
-		GlyphBmp *bmp = ascii_bitmaps [index];
-		int glyph_offsx = bmp->left;
-		int glyph_offsy = max_bearing - bmp->top;
+		GlyphBmp *bmp = asciiBitmaps [index];
+		int glyphOffsx = bmp->left;
+		int glyphOffsy = maxBearing - bmp->top;
 		for (int row = 0; row < bmp->rows; row ++) {
 			unsigned char *srcptr  = bmp->data + row * bmp->pitch;
-			unsigned char *destptr = pixdata + ((row + glyph_offsy) * pw + glyph_offsx + pen)*4;
+			unsigned char *destptr = pixdata + ((row + glyphOffsy) * pw + glyphOffsx + pen)*4;
 			for (int col = 0; col < bmp->width; col ++) {
 				destptr [0] = color.r;
 				destptr [1] = color.g;
@@ -49,9 +49,9 @@ GLTexture *GLFont::render_text (string text, RGB color)
 		pen += bmp->advance;
 	}
 	
-	GLTexture *gltexture = new GLTexture (pixdata, text_width, max_height);
+	GLTexture *texture = new GLTexture (pixdata, textWidth, maxHeight);
 	
 	delete pixdata;
 	
-	return gltexture;
+	return texture;
 }

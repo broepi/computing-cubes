@@ -10,7 +10,7 @@ struct Display : EventManager::Handler
 {
 	Display (int w, int h);
 	~Display ();
-	virtual void on_event (SDL_Event *);
+	virtual void onEvent (SDL_Event *);
 	virtual void clear () = 0;
 	virtual void present () = 0;
 	

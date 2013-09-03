@@ -3,13 +3,20 @@
 #define utils_H
 
 #include <iostream>
+#include <list>
 #include <string>
 #include <SDL2/SDL.h>
 
 using namespace std;
 
-int power2_expanded (int input);
-unsigned int getch_utf8 (unsigned char **strptr);
+int power2Expanded (int input);
+unsigned int getchUtf8 (unsigned char **strptr);
+template<typename T> void extendList (list<T> *l, int count, T *values)
+{
+	while (count--) {
+		l->push_back (*values++);
+	}
+}
 
 struct RGB : SDL_Color
 {
@@ -32,7 +39,7 @@ Logger &Logger::operator<< (const T &x)
 	return *this;
 }
 
-extern Logger dbglog;
+extern Logger dbgLog;
 
 #endif
 

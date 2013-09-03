@@ -13,16 +13,16 @@ struct Application : EventManager::Handler
 	Application ();
 	~Application ();
 	void run ();
-	void on_event (SDL_Event *);
-	virtual void display_clear () = 0;
-	virtual void display_present () = 0;
+	void onEvent (SDL_Event *);
+	virtual void displayClear () = 0;
+	virtual void displayPresent () = 0;
 	
 	bool running;
-	double fps_target;
-	double fps_measured;
-	Stage *cur_stage;
-	unsigned long performance_frequency;
-	EventManager *eventmanager;
+	double fpsTarget;
+	double fpsMeasured;
+	Stage *curStage;
+	unsigned long performanceFrequency;
+	EventManager *eventManager;
 };
 
 #endif // APPLICATION_H

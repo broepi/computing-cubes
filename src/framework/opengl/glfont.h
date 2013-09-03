@@ -14,7 +14,7 @@ struct GLFont : Font
 {
 	GLFont (string filename, unsigned long size);
 
-	GLTexture *render_text (string text, RGB color);
+	GLTexture *renderText (string text, RGB color);
 };
 
 #endif

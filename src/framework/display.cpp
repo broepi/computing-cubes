@@ -11,7 +11,7 @@ Display::~Display ()
 {
 }
 
-void Display::on_event (SDL_Event *event)
+void Display::onEvent (SDL_Event *event)
 {
 	if (event->type == SDL_WINDOWEVENT) {
 		if (event->window.event == SDL_WINDOWEVENT_RESIZED) {
