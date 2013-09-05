@@ -1,5 +1,5 @@
 
-#include "world/world.h"
+#include "world/defs.h"
 
 VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z)
 {

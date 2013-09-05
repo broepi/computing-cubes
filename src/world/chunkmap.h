@@ -3,7 +3,8 @@
 #define CHUNKMAP_H
 
 #include <map>
-#include "world/world.h"
+#include <SDL2/SDL_types.h>
+#include "world/defs.h"
 
 using namespace std;
 

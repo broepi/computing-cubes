@@ -4,6 +4,8 @@
 
 VboComposite::VboComposite ()
 {
+	vertexBufferName = 0;
+	texCoordBufferName = 0;
 }
 
 VboComposite::~VboComposite ()

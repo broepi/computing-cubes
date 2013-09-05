@@ -1,5 +1,7 @@
 
 #include <sstream>
+#include <cstdlib>
+#include <cmath>
 #include "ingamestage.h"
 #include "computingcubes.h"
 #include "firstpersoncamera.h"
@@ -8,12 +10,23 @@
 #include "framework/opengl/gldisplay.h"
 #include "framework/opengl/glfont.h"
 #include "framework/opengl/objects/glcoordaxis.h"
+#include "world/chunkmap.h"
+#include "world/chunk.h"
 
 using namespace std;
 
 IngameStage::IngameStage (ComputingCubes *app)
 	: app (app)
 {
+	rightSpeed = 0, leftSpeed = 0, upSpeed = 0, downSpeed = 0, fwdSpeed = 0, backSpeed = 0;
+	mouseCaught = false;
+	srand (0);
+	
+	app->eventManager->addHandler (SDL_KEYDOWN, this);
+	app->eventManager->addHandler (SDL_KEYUP, this);
+	app->eventManager->addHandler (SDL_MOUSEBUTTONUP, this);
+	app->eventManager->addHandler (SDL_MOUSEMOTION, this);
+	
 	// load textures
 	terrainTex = new GLTexture ("images/terrain.png");
 	
@@ -23,6 +36,13 @@ IngameStage::IngameStage (ComputingCubes *app)
 	playerCam->z = -1.0;
 	testTex = new GLTexture ("images/proteus.png");
 	axis = new GLCoordAxis ();
+	
+	cm = new ChunkMap ();
+	Chunk *c = new Chunk ();
+	cm->chunks [0] = c;
+	for (int i=0; i<FULLCHUNKSIZE; i++)
+		c->voxels [i] = rand () % 2;
+	c->recreateMesh (0, 0, 0, cm);
 }
 
 IngameStage::~IngameStage ()
@@ -37,9 +57,18 @@ void IngameStage::update ()
 
 void IngameStage::drawScene ()
 {
+	playerCam->x +=
+		(fwdSpeed - backSpeed) * sin (degToRad (playerCam->altitude)) +
+		(rightSpeed - leftSpeed) * cos (degToRad (playerCam->altitude));
+	playerCam->z +=
+		(fwdSpeed - backSpeed) * cos (degToRad (playerCam->altitude)) -
+		(rightSpeed - leftSpeed) * sin (degToRad (playerCam->altitude));
+	playerCam->y += upSpeed - downSpeed;
+	
 	app->display->activateWorldDrawMode (playerCam);
 
 	axis->draw ();
+	cm->chunks [0] ->draw ();
 	
 	app->display->activateScreenDrawMode ();
 
@@ -55,5 +84,72 @@ void IngameStage::drawScene ()
 		app->ubuntuMonoFont->renderText ("Some german special letters: ÄÖÜäöüß", RGB (255,255,0));
 	label2Tex->drawEx (10, 30);
 	delete label2Tex;
+}
+
+void IngameStage::onEvent (SDL_Event *event)
+{
+	const float speed = 0.1;
+	switch (event->type) {
+	case SDL_KEYDOWN:
+		switch (event->key.keysym.sym) {
+		case SDLK_w:
+			fwdSpeed = speed;
+			break;
+		case SDLK_a:
+			leftSpeed = speed;
+			break;
+		case SDLK_s:
+			backSpeed = speed;
+			break;
+		case SDLK_d:
+			rightSpeed = speed;
+			break;
+		case SDLK_SPACE:
+			upSpeed = speed;
+			break;
+		case SDLK_LSHIFT:
+			downSpeed = speed;
+			break;
+		}
+		break;
+	case SDL_KEYUP:
+		switch (event->key.keysym.sym) {
+		case SDLK_w:
+			fwdSpeed = 0;
+			break;
+		case SDLK_a:
+			leftSpeed = 0;
+			break;
+		case SDLK_s:
+			backSpeed = 0;
+			break;
+		case SDLK_d:
+			rightSpeed = 0;
+			break;
+		case SDLK_SPACE:
+			upSpeed = 0;
+			break;
+		case SDLK_LSHIFT:
+			downSpeed = 0;
+			break;
+		}
+		break;
+	case SDL_MOUSEBUTTONUP:
+		if (event->button.button == SDL_BUTTON_LEFT) {
+			mouseCaught = !mouseCaught;
+			if (mouseCaught)
+				SDL_SetRelativeMouseMode (SDL_TRUE);
+			else
+				SDL_SetRelativeMouseMode (SDL_FALSE);
+		}
+		break;
+	case SDL_MOUSEMOTION:
+		if (mouseCaught) {
+			playerCam->altitude += event->motion.xrel / (float) app->display->w *2 *90;
+			playerCam->azimuth -= event->motion.yrel / (float) app->display->h *2 *90;
+			SDL_WarpMouseInWindow (app->display->window, app->display->w/2, app->display->h/2);
+		}
+		break;
+	}
 }
 

@@ -25,6 +25,7 @@ echo -e "" >> $hpath
 echo -e "#ifndef $guardname" >> $hpath
 echo -e "#define $guardname" >> $hpath
 echo -e "" >> $hpath
+echo -e "#include <SDL2/SDL_types.h>" >> $hpath
 if [ -n "$baseinput" ]
 then
 	echo -e "#include \"$baseincpath\"" >> $hpath

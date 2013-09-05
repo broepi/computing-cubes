@@ -40,13 +40,13 @@ target=$BUILDDIR/$PROJECTNAME
 objects=""
 objrules=""
 
-for f in $(find $SRCDIR | sort)
+for f in $(cd $SRCDIR ; find * ; cd ..)
 do
 	if [[ $f == *.cpp ]]
-	then
-		objname=$BUILDDIR/$(echo $f | awk '{gsub(/.*\//,"",$1);gsub(/\.cpp$/,"",$1);print}').o
+	then	
+		objname=$BUILDDIR/$(echo $f | awk '{gsub(/\//,"_",$1);gsub(/\.cpp$/,"",$1);print}').o
 		objects="$objects $objname"
-		objrules="$objrules$(objectrule $f $objname)"
+		objrules="$objrules$(objectrule $SRCDIR/$f $objname)"
 	fi
 done
 
@@ -58,3 +58,4 @@ echo -e "clean :\n\t-rm $BUILDDIR/*\n" >> Makefile
 echo -e "$target : $objects" >> Makefile
 echo -e "\t$GPP -o $target $LINKFLAGS $objects $LIBFLAGS\n" >> Makefile
 echo -e $objrules >> Makefile
+

@@ -7,15 +7,27 @@
 #include <string>
 #include <SDL2/SDL.h>
 
+#define PI 3.14159265359
+
 using namespace std;
 
 int power2Expanded (int input);
 unsigned int getchUtf8 (unsigned char **strptr);
-template<typename T> void extendList (list<T> *l, int count, T *values)
+template<typename T> inline void extendListBy (list<T> *l,  T *values, int count)
 {
 	while (count--) {
 		l->push_back (*values++);
 	}
+}
+
+inline double radToDeg (double r)
+{
+	return r * 360.0 / (2.0*PI);
+}
+
+inline double degToRad (double d)
+{
+	return d * (2.0*PI) / 360.0;
 }
 
 struct RGB : SDL_Color
