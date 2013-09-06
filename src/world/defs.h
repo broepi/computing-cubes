@@ -8,16 +8,16 @@
 	
 	World-specific constants, types and functions are defined here.
 	
-	The side face of a voxel is defined as:
+	The faces of a voxel are defined as follows:
 	
-	y
-	^
-	| 3 - 4
-	| | / |
-	| 1 - 2
-	+-------> x
+	y                       y  y                       y  z            +-------> x
+	^                       ^  ^                       ^  ^            | 3 - 4
+	| 3 - 4           3 - 4 |  | 3 - 4           3 - 4 |  | 3 - 4      | | / |
+	| | / |           | / | |  | | / |           | / | |  | | / |      | 1 - 2
+	| 1 - 2           1 - 2 |  | 1 - 2           1 - 2 |  | 1 - 2      v
+	+-------> x   x <-------+  +-------> z   z <-------+  +-------> x  z
 	
-	(front side)
+	(front side)  (back side)  (right side)  (left side)  (top side)   (bottom side)
 	
 	first triangle: 1, 2, 4   second triangle: 4, 3, 1
 

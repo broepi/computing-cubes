@@ -12,6 +12,7 @@
 #include "framework/opengl/objects/glcoordaxis.h"
 #include "world/chunkmap.h"
 #include "world/chunk.h"
+#include "world/voxeltypemap.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ IngameStage::IngameStage (ComputingCubes *app)
 	mouseCaught = false;
 	srand (0);
 	
+	// add handlers
 	app->eventManager->addHandler (SDL_KEYDOWN, this);
 	app->eventManager->addHandler (SDL_KEYUP, this);
 	app->eventManager->addHandler (SDL_MOUSEBUTTONUP, this);
@@ -29,25 +31,25 @@ IngameStage::IngameStage (ComputingCubes *app)
 	
 	// load textures
 	terrainTex = new GLTexture ("images/terrain.png");
+	logoTex = new GLTexture ("images/logo.png");
 	
 	playerCam = new FirstPersonCamera (app->display);
 	playerCam->x = 0.5;
 	playerCam->y = 0.5;
 	playerCam->z = -1.0;
-	testTex = new GLTexture ("images/proteus.png");
 	axis = new GLCoordAxis ();
 	
-	cm = new ChunkMap ();
+	cm = new ChunkMap (terrainTex);
 	Chunk *c = new Chunk ();
 	cm->chunks [0] = c;
 	for (int i=0; i<FULLCHUNKSIZE; i++)
-		c->voxels [i] = rand () % 2;
+		c->voxels [i] = rand () % VOXTYPECOUNT;
 	c->recreateMesh (0, 0, 0, cm);
 }
 
 IngameStage::~IngameStage ()
 {	
-	delete testTex;
+	delete logoTex;
 	delete terrainTex;
 }
 
@@ -67,23 +69,35 @@ void IngameStage::drawScene ()
 	
 	app->display->activateWorldDrawMode (playerCam);
 
+	cm->draw ();
+
+	glDisable (GL_DEPTH_TEST);
 	axis->draw ();
-	cm->chunks [0] ->draw ();
 	
 	app->display->activateScreenDrawMode ();
 
-	testTex->drawEx (10, 60);
+	stringstream mystream;
+	GLTexture *labelTex;
+	
+	labelTex = app->ubuntuMonoFont->renderText (
+		"\"Computing Cubes\" and some German special letters: äöüÄÖÜß",
+		RGB (255,255,255));
+	labelTex->drawEx (10, 10);
+	delete labelTex;
+	
+	mystream << "Framerate: " << app->fpsMeasured;
+	labelTex = app->ubuntuMonoFont->renderText (mystream.str(), RGB (0,255,255));
+	labelTex->drawEx (10, 10 + labelTex->h * 1);
+	mystream.str (string());
+	delete labelTex;
 
-	stringstream fpsLabel;
-	fpsLabel << "Framerate: " << app->fpsMeasured;
-	GLTexture *fpsLabelTex = app->ubuntuMonoFont->renderText (fpsLabel.str(), RGB (0,255,255));
-	fpsLabelTex->drawEx (10, 10);
-	delete fpsLabelTex;
-
-	GLTexture *label2Tex =
-		app->ubuntuMonoFont->renderText ("Some german special letters: ÄÖÜäöüß", RGB (255,255,0));
-	label2Tex->drawEx (10, 30);
-	delete label2Tex;
+	mystream << "Position: " << playerCam->x << " ; " << playerCam->y << " ; " << playerCam->z;
+	labelTex = app->ubuntuMonoFont->renderText (mystream.str(), RGB (0,255,255));
+	labelTex->drawEx (10, 10 + labelTex->h * 2);
+	mystream.str (string());
+	delete labelTex;
+	
+	logoTex->drawEx (app->display->w-10-logoTex->w, 10, 0.5);
 }
 
 void IngameStage::onEvent (SDL_Event *event)

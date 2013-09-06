@@ -105,16 +105,22 @@ void GLTexture::loadSurface (SDL_Surface *surf)
 	SDL_FreeSurface (tmpSurf);
 }
 
+void GLTexture::select ()
+{
+	glBindTexture (GL_TEXTURE_2D, gltexname);
+}
+
 void GLTexture::draw ()
 {
 	drawEx (0,0);
 }
 
-void GLTexture::drawEx (int x, int y)
+void GLTexture::drawEx (int x, int y, float alpha)
 {
 	glEnable (GL_TEXTURE_2D);
 	glEnable (GL_BLEND);
-	glColor3d (1,1,1);
+	glDisable (GL_CULL_FACE);
+	glColor4d (1,1,1, alpha);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture (GL_TEXTURE_2D, gltexname);
 	glBegin (GL_QUADS);

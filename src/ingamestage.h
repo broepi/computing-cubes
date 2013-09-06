@@ -21,7 +21,6 @@ struct IngameStage : Stage, EventManager::Handler
 	void onEvent (SDL_Event *event);
 	
 	ComputingCubes *app;
-	GLTexture *testTex;
 	GLCoordAxis *axis;
 	FirstPersonCamera *playerCam;
 	
@@ -32,6 +31,7 @@ struct IngameStage : Stage, EventManager::Handler
 	
 	// Textures
 	GLTexture *terrainTex;
+	GLTexture *logoTex;
 };
 
 #endif // INGAMESTAGE_H

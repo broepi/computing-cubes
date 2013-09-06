@@ -1,5 +1,8 @@
 
+#include <iostream>
 #include "world/defs.h"
+
+using namespace std;
 
 VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z)
 {
@@ -12,8 +15,8 @@ VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z)
 ChunkId chunkVectorToId (Sint32 x, Sint32 y, Sint32 z)
 {
 	return
-		(x & WORLDMASK) |
-		((y & WORLDMASK) << WORLDBITS) |
-		((z & WORLDMASK) << WORLDBITS << WORLDBITS);
+		((ChunkId)x & WORLDMASK) |
+		((ChunkId)(y & WORLDMASK) << WORLDBITS) |
+		((ChunkId)(z & WORLDMASK) << WORLDBITS << WORLDBITS);
 }
 

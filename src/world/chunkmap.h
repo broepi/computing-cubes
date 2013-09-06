@@ -9,13 +9,16 @@
 using namespace std;
 
 struct Chunk;
+struct GLTexture;
 
 struct ChunkMap
 {
-	ChunkMap ();
+	ChunkMap (GLTexture *terrainTex);
 	~ChunkMap ();
 	Voxel getVoxel (Sint32 x, Sint32 y, Sint32 z);
+	void draw ();
 	
+	GLTexture *terrainTex;
 	map<ChunkId,Chunk*> chunks;
 };
 

@@ -22,9 +22,9 @@ struct VoxelTypeMap
 		~VoxelType ();
 		
 		Uint32 topFrame, bottomFrame, sideFrame;
-		Uint8 topFrameU, topFrameV;
-		Uint8 bottomFrameU, bottomFrameV;
-		Uint8 sideFrameU, sideFrameV;
+		GLfloat topFrameU, topFrameV;
+		GLfloat bottomFrameU, bottomFrameV;
+		GLfloat sideFrameU, sideFrameV;
 		GLfloat topTexCoords [12];
 		GLfloat bottomTexCoords [12];
 		GLfloat sideTexCoords [12];

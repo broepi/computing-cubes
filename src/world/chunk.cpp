@@ -2,7 +2,9 @@
 #include "world/chunk.h"
 #include "world/chunkmap.h"
 #include "world/voxeltypemap.h"
+#include "world/defs.h"
 #include "framework/utils.h"
+#include "framework/opengl/gltexture.h"
 
 Chunk::Chunk ()
 {
@@ -42,25 +44,90 @@ void Chunk::recreateMesh (Sint32 chunkX, Sint32 chunkY, Sint32 chunkZ, ChunkMap 
 			for (Uint8 x = 0; x < CHUNKSIZE; x ++) {
 				Voxel voxel = getVoxel (x, y, z);
 				if (voxel != VOXAIR) {
-					GLint llf[] = {offsX+x, offsY+y, offsZ+z};
-					GLint rlf[] = {offsX+x+1, offsY+y, offsZ+z};
-					GLint luf[] = {offsX+x, offsY+y+1, offsZ+z};
+					GLint llf[] = {offsX+x,   offsY+y,   offsZ+z};
+					GLint rlf[] = {offsX+x+1, offsY+y,   offsZ+z};
+					GLint luf[] = {offsX+x,   offsY+y+1, offsZ+z};
 					GLint ruf[] = {offsX+x+1, offsY+y+1, offsZ+z};
-					GLint llb[] = {offsX+x, offsY+y, offsZ+z+1};
-					GLint rlb[] = {offsX+x+1, offsY+y, offsZ+z+1};
-					GLint lub[] = {offsX+x, offsY+y+1, offsZ+z+1};
+					GLint llb[] = {offsX+x,   offsY+y,   offsZ+z+1};
+					GLint rlb[] = {offsX+x+1, offsY+y,   offsZ+z+1};
+					GLint lub[] = {offsX+x,   offsY+y+1, offsZ+z+1};
 					GLint rub[] = {offsX+x+1, offsY+y+1, offsZ+z+1};
-					// draw bottoms
-					if ( y == 0
-						? (chunkMap->getVoxel (offsX+x,offsY+y-1,offsZ+z) == 0)
-						: (getVoxel (x,y-1,z) == 0) )
+					// draw front faces
+					if ( z == 0
+						? (chunkMap->getVoxel (offsX+x,offsY+y,offsZ+z-1) == VOXAIR)
+						: (getVoxel (x,y,z-1) == VOXAIR) )
 					{
 						extendListBy (&vertexList, llf, 3);
-						extendListBy (&vertexList, llb, 3);
 						extendListBy (&vertexList, rlf, 3);
+						extendListBy (&vertexList, ruf, 3);
+						extendListBy (&vertexList, ruf, 3);
+						extendListBy (&vertexList, luf, 3);
+						extendListBy (&vertexList, llf, 3);
+						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->sideTexCoords, 12);
+					}
+					// draw back faces
+					if ( z == CHUNKSIZE-1
+						? (chunkMap->getVoxel (offsX+x,offsY+y,offsZ+z+1) == VOXAIR)
+						: (getVoxel (x,y,z+1) == VOXAIR) )
+					{
+						extendListBy (&vertexList, rlb, 3);
+						extendListBy (&vertexList, llb, 3);
+						extendListBy (&vertexList, lub, 3);
+						extendListBy (&vertexList, lub, 3);
+						extendListBy (&vertexList, rub, 3);
+						extendListBy (&vertexList, rlb, 3);
+						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->sideTexCoords, 12);
+					}
+					// draw right faces
+					if ( x == CHUNKSIZE-1
+						? (chunkMap->getVoxel (offsX+x+1,offsY+y,offsZ+z) == VOXAIR)
+						: (getVoxel (x+1,y,z) == VOXAIR) )
+					{
+						extendListBy (&vertexList, rlf, 3);
+						extendListBy (&vertexList, rlb, 3);
+						extendListBy (&vertexList, rub, 3);
+						extendListBy (&vertexList, rub, 3);
+						extendListBy (&vertexList, ruf, 3);
+						extendListBy (&vertexList, rlf, 3);
+						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->sideTexCoords, 12);
+					}
+					// draw left faces
+					if ( x == 0
+						? (chunkMap->getVoxel (offsX+x-1,offsY+y,offsZ+z) == VOXAIR)
+						: (getVoxel (x-1,y,z) == VOXAIR) )
+					{
+						extendListBy (&vertexList, llb, 3);
+						extendListBy (&vertexList, llf, 3);
+						extendListBy (&vertexList, luf, 3);
+						extendListBy (&vertexList, luf, 3);
+						extendListBy (&vertexList, lub, 3);
+						extendListBy (&vertexList, llb, 3);
+						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->sideTexCoords, 12);
+					}
+					// draw top faces
+					if ( y == CHUNKSIZE-1
+						? (chunkMap->getVoxel (offsX+x,offsY+y+1,offsZ+z) == VOXAIR)
+						: (getVoxel (x,y+1,z) == VOXAIR) )
+					{
+						extendListBy (&vertexList, luf, 3);
+						extendListBy (&vertexList, ruf, 3);
+						extendListBy (&vertexList, rub, 3);
+						extendListBy (&vertexList, rub, 3);
+						extendListBy (&vertexList, lub, 3);
+						extendListBy (&vertexList, luf, 3);
+						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->topTexCoords, 12);
+					}
+					// draw bottom faces
+					if ( y == 0
+						? (chunkMap->getVoxel (offsX+x,offsY+y-1,offsZ+z) == VOXAIR)
+						: (getVoxel (x,y-1,z) == VOXAIR) )
+					{
 						extendListBy (&vertexList, llb, 3);
 						extendListBy (&vertexList, rlb, 3);
 						extendListBy (&vertexList, rlf, 3);
+						extendListBy (&vertexList, rlf, 3);
+						extendListBy (&vertexList, llf, 3);
+						extendListBy (&vertexList, llb, 3);
 						extendListBy (&texCoordList, voxelTypeMap.get(voxel)->bottomTexCoords, 12);
 					}
 				}
@@ -68,7 +135,7 @@ void Chunk::recreateMesh (Sint32 chunkX, Sint32 chunkY, Sint32 chunkZ, ChunkMap 
 		}
 	}
 	
-	vertexCount = vertexList.size ();
+	vertexCount = vertexList.size () / 3;
 	
 	if (vertices) delete vertices;
 	vertices = new GLint [vertexCount*3];
@@ -81,13 +148,16 @@ void Chunk::recreateMesh (Sint32 chunkX, Sint32 chunkY, Sint32 chunkZ, ChunkMap 
 	meshUpToDate = true;
 }
 
-void Chunk::draw ()
+void Chunk::draw (GLTexture *terrainTex)
 {
+	terrainTex->select ();
 	glDisable (GL_TEXTURE_2D);
 	glEnable (GL_CULL_FACE);
+	glEnable (GL_TEXTURE_2D);
 	glBegin (GL_TRIANGLES);
-	glColor3f (0.0, 0.5, 0.0);
+	glColor3f (1.0, 1.0, 1.0);
 	for (int i=0; i<vertexCount; i++) {
+		glTexCoord2f (texCoords [i*2], texCoords [i*2 + 1]);
 		glVertex3i (vertices [i*3], vertices [i*3 + 1], vertices [i*3 + 2]);
 	}
 	glEnd ();
