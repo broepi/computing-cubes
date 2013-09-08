@@ -40,11 +40,19 @@ IngameStage::IngameStage (ComputingCubes *app)
 	axis = new GLCoordAxis ();
 	
 	cm = new ChunkMap (terrainTex);
-	Chunk *c = new Chunk ();
-	cm->chunks [0] = c;
+	for (int x=0; x<16; x++) {
+		for (int z=0; z<16; z++) {
+			ChunkId k = chunkVectorToId (x,0,z);
+			cm->chunks [k] = new Chunk ();
+			for (int i=0; i<FULLCHUNKSIZE; i++)
+				cm->chunks [k]->voxels [i] = (i + i/CHUNKSIZE + i/CHUNKSIZE/CHUNKSIZE) % 2;
+			cm->chunks [k]->recreateMesh (x, 0, z, cm);
+		}
+	}
+	cm->chunks [chunkVectorToId (-1,0,0)] = new Chunk ();
 	for (int i=0; i<FULLCHUNKSIZE; i++)
-		c->voxels [i] = rand () % VOXTYPECOUNT;
-	c->recreateMesh (0, 0, 0, cm);
+		cm->chunks [chunkVectorToId (-1,0,0)]->voxels [i] = (i + i/CHUNKSIZE + i/CHUNKSIZE/CHUNKSIZE) % 2;
+	cm->chunks [chunkVectorToId (-1,0,0)]->recreateMesh (-1, 0, 0, cm);
 }
 
 IngameStage::~IngameStage ()

@@ -4,7 +4,7 @@
 
 /*
 
-	world.h
+	defs.h
 	
 	World-specific constants, types and functions are defined here.
 	
@@ -40,8 +40,38 @@ typedef Uint64 ChunkId; // linear adress of a chunk in a world
 typedef Uint16 VoxelId; // linear adress of a voxel in a chunk
 typedef Uint8 Voxel; // data value of a voxel
 
-VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z);
-ChunkId chunkVectorToId (Sint32 x, Sint32 y, Sint32 z);
+inline VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z)
+{
+	return
+		(x & CHUNKMASK) |
+		((y & CHUNKMASK) << CHUNKBITS) |
+		((z & CHUNKMASK) << CHUNKBITS << CHUNKBITS);
+}
+
+inline ChunkId chunkVectorToId (Sint32 x, Sint32 y, Sint32 z)
+{
+	return
+		((ChunkId)(x & WORLDMASK)) |
+		((ChunkId)(y & WORLDMASK) << WORLDBITS) |
+		((ChunkId)(z & WORLDMASK) << WORLDBITS << WORLDBITS);
+}
+
+inline Sint32 getChunkX (ChunkId chunkId)
+{
+	return (Sint32)((chunkId) & WORLDMASK) << (32-WORLDBITS) >> (32-WORLDBITS);
+}
+
+inline Sint32 getChunkY (ChunkId chunkId)
+{
+	return (Sint32)((chunkId >> WORLDBITS) & WORLDMASK) << (32-WORLDBITS) >> (32-WORLDBITS);
+}
+
+inline Sint32 getChunkZ (ChunkId chunkId)
+{
+	return (Sint32)((chunkId >> WORLDBITS >> WORLDBITS) & WORLDMASK)
+		<< (32-WORLDBITS) >> (32-WORLDBITS);
+}
+
 
 #endif // WORLD_H
 

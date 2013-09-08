@@ -61,7 +61,7 @@ build/framework_error.o : src/framework/error.cpp src/framework/error.h
 build/framework_display.o : src/framework/display.cpp src/framework/display.h src/framework/eventmanager.h
 	g++ -o build/framework_display.o -I./src $(shell freetype-config --cflags) -c src/framework/display.cpp
 
-build/ingamestage.o : src/ingamestage.cpp src/ingamestage.h src/framework/stage.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h src/firstpersoncamera.h src/framework/opengl/perspectivecamera.h src/framework/opengl/camera.h src/framework/display.h src/framework/utils.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/opengl/glfont.h src/framework/font.h src/framework/opengl/objects/glcoordaxis.h
+build/ingamestage.o : src/ingamestage.cpp src/ingamestage.h src/framework/eventmanager.h src/framework/stage.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/firstpersoncamera.h src/framework/opengl/perspectivecamera.h src/framework/opengl/camera.h src/framework/display.h src/framework/utils.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h src/framework/opengl/gldisplay.h src/framework/opengl/glfont.h src/framework/font.h src/framework/opengl/objects/glcoordaxis.h src/world/chunkmap.h src/world/defs.h src/world/chunk.h src/world/voxeltypemap.h
 	g++ -o build/ingamestage.o -I./src $(shell freetype-config --cflags) -c src/ingamestage.cpp
 
 build/main.o : src/main.cpp src/framework/error.h src/framework/utils.h src/computingcubes.h src/framework/opengl/glapplication.h src/framework/application.h src/framework/eventmanager.h
@@ -73,10 +73,10 @@ build/world_voxeltypemap.o : src/world/voxeltypemap.cpp src/world/voxeltypemap.h
 build/world_defs.o : src/world/defs.cpp src/world/defs.h
 	g++ -o build/world_defs.o -I./src $(shell freetype-config --cflags) -c src/world/defs.cpp
 
-build/world_chunk.o : src/world/chunk.cpp src/world/chunk.h src/world/defs.h src/framework/utils.h
+build/world_chunk.o : src/world/chunk.cpp src/world/chunk.h src/world/defs.h src/world/chunkmap.h src/world/voxeltypemap.h src/framework/utils.h src/framework/opengl/gltexture.h src/framework/opengl/gldrawable.h
 	g++ -o build/world_chunk.o -I./src $(shell freetype-config --cflags) -c src/world/chunk.cpp
 
-build/world_chunkmap.o : src/world/chunkmap.cpp src/world/chunkmap.h src/world/defs.h src/world/chunk.h src/framework/utils.h
+build/world_chunkmap.o : src/world/chunkmap.cpp src/world/chunkmap.h src/world/defs.h src/world/chunk.h src/world/voxeltypemap.h src/framework/utils.h
 	g++ -o build/world_chunkmap.o -I./src $(shell freetype-config --cflags) -c src/world/chunkmap.cpp
 
 

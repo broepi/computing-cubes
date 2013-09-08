@@ -1,0 +1,233 @@
+# depslib dependency file v1.0
+1378162531 source:/mnt/bp-data/Projekte/computing-cubes/src/computingcubes.cpp
+	<iostream>
+	<sstream>
+	"computingcubes.h"
+	"ingamestage.h"
+	"framework/opengl/gltexture.h"
+	"framework/opengl/gldisplay.h"
+	"framework/opengl/glfont.h"
+
+1378162512 /mnt/bp-data/Projekte/computing-cubes/src/computingcubes.h
+	"framework/opengl/glapplication.h"
+
+1378163590 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/glapplication.h
+	"framework/application.h"
+
+1378163095 /mnt/bp-data/Projekte/computing-cubes/src/framework/application.h
+	<SDL2/SDL.h>
+	"framework/eventmanager.h"
+
+1378163244 /mnt/bp-data/Projekte/computing-cubes/src/framework/eventmanager.h
+	<map>
+	<set>
+	<SDL2/SDL.h>
+
+1378453458 /mnt/bp-data/Projekte/computing-cubes/src/ingamestage.h
+	"framework/eventmanager.h"
+	"framework/stage.h"
+
+1378164262 /mnt/bp-data/Projekte/computing-cubes/src/framework/stage.h
+
+1378453673 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/gltexture.h
+	<string>
+	<SDL2/SDL.h>
+	<SDL2/SDL_opengl.h>
+	"framework/opengl/gldrawable.h"
+
+1377675033 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/gldrawable.h
+
+1378163644 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/gldisplay.h
+	<string>
+	<SDL2/SDL.h>
+	<SDL2/SDL_opengl.h>
+	"framework/display.h"
+
+1378163118 /mnt/bp-data/Projekte/computing-cubes/src/framework/display.h
+	<SDL2/SDL.h>
+	"framework/eventmanager.h"
+
+1378163730 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/glfont.h
+	<string>
+	"framework/font.h"
+	"framework/utils.h"
+
+1378163285 /mnt/bp-data/Projekte/computing-cubes/src/framework/font.h
+	<string>
+	<vector>
+	<ft2build.h>
+	"framework/utils.h"
+
+1378339225 /mnt/bp-data/Projekte/computing-cubes/src/framework/utils.h
+	<iostream>
+	<list>
+	<string>
+	<SDL2/SDL.h>
+
+1377965896 source:/mnt/bp-data/Projekte/computing-cubes/src/firstpersoncamera.cpp
+	<SDL2/SDL_opengl.h>
+	"firstpersoncamera.h"
+	"framework/utils.h"
+
+1377965786 /mnt/bp-data/Projekte/computing-cubes/src/firstpersoncamera.h
+	"framework/opengl/perspectivecamera.h"
+
+1378164191 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/perspectivecamera.h
+	"framework/opengl/camera.h"
+	"framework/display.h"
+
+1377913042 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/camera.h
+
+1378164284 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/application.cpp
+	"framework/application.h"
+	"framework/utils.h"
+	"framework/error.h"
+	"framework/stage.h"
+
+1376670579 /mnt/bp-data/Projekte/computing-cubes/src/framework/error.h
+	<string>
+
+1378163108 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/display.cpp
+	"framework/display.h"
+
+1377187490 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/error.cpp
+	"framework/error.h"
+
+1378164309 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/eventmanager.cpp
+	"framework/eventmanager.h"
+
+1378680119 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/font.cpp
+	<cstring>
+	<algorithm>
+	"framework/font.h"
+	"framework/error.h"
+	"framework/utils.h"
+	"framework/opengl/gltexture.h"
+
+1378164355 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/glapplication.cpp
+	"framework/opengl/glapplication.h"
+	"framework/opengl/gldisplay.h"
+
+1378163710 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/gldisplay.cpp
+	"framework/opengl/gldisplay.h"
+	"framework/opengl/camera.h"
+	"framework/error.h"
+	"framework/utils.h"
+
+1378164389 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/glfont.cpp
+	"framework/opengl/glfont.h"
+	"framework/opengl/gltexture.h"
+	"framework/utils.h"
+
+1378453665 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/gltexture.cpp
+	<iostream>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	"framework/opengl/gltexture.h"
+	"framework/error.h"
+	"framework/utils.h"
+
+1377912909 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/objects/glcoordaxis.cpp
+	<SDL2/SDL_opengl.h>
+	"framework/opengl/objects/glcoordaxis.h"
+	"framework/utils.h"
+
+1377912791 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/objects/glcoordaxis.h
+	"framework/opengl/gldrawable.h"
+
+1378670680 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/objects/vbocomposite.cpp
+	"framework/opengl/objects/vbocomposite.h"
+	"framework/utils.h"
+
+1378660281 /mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/objects/vbocomposite.h
+	<SDL2/SDL_types.h>
+	<SDL2/SDL_opengl.h>
+
+1378676232 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/opengl/perspectivecamera.cpp
+	<SDL2/SDL_opengl.h>
+	<GL/glu.h>
+	"framework/opengl/perspectivecamera.h"
+	"framework/utils.h"
+
+1378163450 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/stage.cpp
+	"framework/stage.h"
+	"framework/utils.h"
+
+1378163480 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/thread.cpp
+	"framework/thread.h"
+	"framework/utils.h"
+
+1377969358 /mnt/bp-data/Projekte/computing-cubes/src/framework/thread.h
+	<string>
+	<SDL2/SDL.h>
+
+1378163566 source:/mnt/bp-data/Projekte/computing-cubes/src/framework/utils.cpp
+	<sstream>
+	"framework/utils.h"
+
+1378675796 source:/mnt/bp-data/Projekte/computing-cubes/src/ingamestage.cpp
+	<sstream>
+	<cstdlib>
+	<cmath>
+	"ingamestage.h"
+	"computingcubes.h"
+	"firstpersoncamera.h"
+	"framework/utils.h"
+	"framework/opengl/gltexture.h"
+	"framework/opengl/gldisplay.h"
+	"framework/opengl/glfont.h"
+	"framework/opengl/objects/glcoordaxis.h"
+	"world/chunkmap.h"
+	"world/chunk.h"
+	"world/voxeltypemap.h"
+
+1378388717 /mnt/bp-data/Projekte/computing-cubes/src/world/chunkmap.h
+	<map>
+	<SDL2/SDL_types.h>
+	"world/defs.h"
+
+1378675659 /mnt/bp-data/Projekte/computing-cubes/src/world/defs.h
+	<SDL2/SDL_types.h>
+
+1378677464 /mnt/bp-data/Projekte/computing-cubes/src/world/chunk.h
+	<SDL2/SDL_types.h>
+	<SDL2/SDL_opengl.h>
+	"world/defs.h"
+
+1378391091 /mnt/bp-data/Projekte/computing-cubes/src/world/voxeltypemap.h
+	<SDL2/SDL_types.h>
+	<SDL2/SDL_opengl.h>
+	"world/defs.h"
+
+1378162936 source:/mnt/bp-data/Projekte/computing-cubes/src/main.cpp
+	<iostream>
+	"framework/error.h"
+	"framework/utils.h"
+	"computingcubes.h"
+
+1378680829 source:/mnt/bp-data/Projekte/computing-cubes/src/world/chunk.cpp
+	<cstring>
+	"world/chunk.h"
+	"world/chunkmap.h"
+	"world/voxeltypemap.h"
+	"world/defs.h"
+	"framework/utils.h"
+	"framework/opengl/gltexture.h"
+
+1378674438 source:/mnt/bp-data/Projekte/computing-cubes/src/world/chunkmap.cpp
+	<cmath>
+	"world/chunkmap.h"
+	"world/chunk.h"
+	"world/voxeltypemap.h"
+	"framework/utils.h"
+
+1378672790 source:/mnt/bp-data/Projekte/computing-cubes/src/world/defs.cpp
+	<iostream>
+	"world/defs.h"
+
+1378391303 source:/mnt/bp-data/Projekte/computing-cubes/src/world/voxeltypemap.cpp
+	<string.h>
+	"world/voxeltypemap.h"
+	"framework/utils.h"
+	"world/defs.h"
+

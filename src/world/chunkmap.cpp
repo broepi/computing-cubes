@@ -33,7 +33,10 @@ void ChunkMap::draw ()
 {
 	map<ChunkId,Chunk*>::iterator it;
 	for (it = chunks.begin (); it != chunks.end (); it ++) {
-		it->second->draw (terrainTex);
+		Sint32 chunkX = getChunkX (it->first);
+		Sint32 chunkY = getChunkY (it->first);
+		Sint32 chunkZ = getChunkZ (it->first);
+		it->second->draw (chunkX, chunkY, chunkZ, terrainTex);
 	}
 }
 

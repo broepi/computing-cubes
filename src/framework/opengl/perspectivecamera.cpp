@@ -9,7 +9,7 @@ PerspectiveCamera::PerspectiveCamera (Display *display)
 {
 	fovy = 90.0;
 	znear = 0.1;
-	zfar = 100.0;
+	zfar = 500.0;
 	lefthanded = true;
 }
 

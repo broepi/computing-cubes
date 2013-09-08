@@ -3,6 +3,7 @@
 #define CHUNK_H
 
 #include <SDL2/SDL_types.h>
+#define GL_GLEXT_PROTOTYPES
 #include <SDL2/SDL_opengl.h>
 #include "world/defs.h"
 
@@ -17,12 +18,12 @@ struct Chunk
 	Voxel getVoxel (Uint8 x, Uint8 y, Uint8 z);
 	void setVoxel (Uint8 x, Uint8 y, Uint8 z, Voxel val);
 	void recreateMesh (Sint32 chunkX, Sint32 chunkY, Sint32 chunkZ, ChunkMap *chunkMap);
-	void draw (GLTexture *terrainTex);
+	void draw (Sint32 chunkX, Sint32 chunkY, Sint32 chunkZ, GLTexture *terrainTex);
 	
 	Voxel voxels [FULLCHUNKSIZE];
 	bool meshUpToDate;
-	GLint *vertices;
-	GLfloat *texCoords;
+	GLuint vertexBufferName;
+	GLuint texCoordBufferName;
 	Uint32 vertexCount;
 };
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="computing-cubes" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/computing-cubes" prefix_auto="1" extension_auto="1" />
+				<Option working_dir=".." />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/computing-cubes" prefix_auto="1" extension_auto="1" />
+				<Option working_dir=".." />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="../src" />
+			<Add directory="/usr/include/freetype2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lSDL2 -lSDL2_image -lGL -lGLU -L/usr/lib/x86_64-linux-gnu -lfreetype -lz" />
+		</Linker>
+		<Unit filename="../src/computingcubes.cpp" />
+		<Unit filename="../src/computingcubes.h" />
+		<Unit filename="../src/firstpersoncamera.cpp" />
+		<Unit filename="../src/firstpersoncamera.h" />
+		<Unit filename="../src/framework/application.cpp" />
+		<Unit filename="../src/framework/application.h" />
+		<Unit filename="../src/framework/display.cpp" />
+		<Unit filename="../src/framework/display.h" />
+		<Unit filename="../src/framework/drawable.h" />
+		<Unit filename="../src/framework/error.cpp" />
+		<Unit filename="../src/framework/error.h" />
+		<Unit filename="../src/framework/eventmanager.cpp" />
+		<Unit filename="../src/framework/eventmanager.h" />
+		<Unit filename="../src/framework/font.cpp" />
+		<Unit filename="../src/framework/font.h" />
+		<Unit filename="../src/framework/opengl/camera.h" />
+		<Unit filename="../src/framework/opengl/glapplication.cpp" />
+		<Unit filename="../src/framework/opengl/glapplication.h" />
+		<Unit filename="../src/framework/opengl/gldisplay.cpp" />
+		<Unit filename="../src/framework/opengl/gldisplay.h" />
+		<Unit filename="../src/framework/opengl/gldrawable.h" />
+		<Unit filename="../src/framework/opengl/glfont.cpp" />
+		<Unit filename="../src/framework/opengl/glfont.h" />
+		<Unit filename="../src/framework/opengl/gltexture.cpp" />
+		<Unit filename="../src/framework/opengl/gltexture.h" />
+		<Unit filename="../src/framework/opengl/objects/glcoordaxis.cpp" />
+		<Unit filename="../src/framework/opengl/objects/glcoordaxis.h" />
+		<Unit filename="../src/framework/opengl/objects/vbocomposite.cpp" />
+		<Unit filename="../src/framework/opengl/objects/vbocomposite.h" />
+		<Unit filename="../src/framework/opengl/perspectivecamera.cpp" />
+		<Unit filename="../src/framework/opengl/perspectivecamera.h" />
+		<Unit filename="../src/framework/stage.cpp" />
+		<Unit filename="../src/framework/stage.h" />
+		<Unit filename="../src/framework/thread.cpp" />
+		<Unit filename="../src/framework/thread.h" />
+		<Unit filename="../src/framework/utils.cpp" />
+		<Unit filename="../src/framework/utils.h" />
+		<Unit filename="../src/ingamestage.cpp" />
+		<Unit filename="../src/ingamestage.h" />
+		<Unit filename="../src/main.cpp" />
+		<Unit filename="../src/world/chunk.cpp" />
+		<Unit filename="../src/world/chunk.h" />
+		<Unit filename="../src/world/chunkmap.cpp" />
+		<Unit filename="../src/world/chunkmap.h" />
+		<Unit filename="../src/world/defs.cpp" />
+		<Unit filename="../src/world/defs.h" />
+		<Unit filename="../src/world/voxeltypemap.cpp" />
+		<Unit filename="../src/world/voxeltypemap.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
