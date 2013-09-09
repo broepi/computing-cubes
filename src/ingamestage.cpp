@@ -70,7 +70,6 @@ IngameStage::~IngameStage ()
 void IngameStage::update ()
 {
 	cm->hitFirstBlock (playerCam, 10, &faceHit);
-	cout << (int)faceHit.face << endl;
 }
 
 void IngameStage::drawScene ()
