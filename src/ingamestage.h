@@ -4,12 +4,15 @@
 
 #include "framework/eventmanager.h"
 #include "framework/stage.h"
+#include "world/chunkmap.h"
 
 struct ComputingCubes;
 struct GLTexture;
 struct GLCoordAxis;
 struct FirstPersonCamera;
 struct ChunkMap;
+struct WireCube;
+struct CrossHairs;
 
 struct IngameStage : Stage, EventManager::Handler
 {
@@ -23,6 +26,9 @@ struct IngameStage : Stage, EventManager::Handler
 	ComputingCubes *app;
 	GLCoordAxis *axis;
 	FirstPersonCamera *playerCam;
+	WireCube *picker;
+	CrossHairs *cross;
+	ChunkMap::HitRecord faceHit;
 	
 	float rightSpeed, leftSpeed, upSpeed, downSpeed, fwdSpeed, backSpeed;
 	bool mouseCaught;

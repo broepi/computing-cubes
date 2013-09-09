@@ -40,6 +40,16 @@ typedef Uint64 ChunkId; // linear adress of a chunk in a world
 typedef Uint16 VoxelId; // linear adress of a voxel in a chunk
 typedef Uint8 Voxel; // data value of a voxel
 
+enum {
+	VOXFACEUNDEF,
+	VOXFACEFRONT,
+	VOXFACEBACK,
+	VOXFACERIGHT,
+	VOXFACELEFT,
+	VOXFACETOP,
+	VOXFACEBOTTOM
+};
+
 inline VoxelId voxelVectorToId (Uint8 x, Uint8 y, Uint8 z)
 {
 	return

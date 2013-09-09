@@ -2,6 +2,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <cmath>
+#include <SDL2/SDL_opengl.h>
 #include "ingamestage.h"
 #include "computingcubes.h"
 #include "firstpersoncamera.h"
@@ -10,6 +11,8 @@
 #include "framework/opengl/gldisplay.h"
 #include "framework/opengl/glfont.h"
 #include "framework/opengl/objects/glcoordaxis.h"
+#include "framework/opengl/objects/wirecube.h"
+#include "framework/opengl/objects/crosshairs.h"
 #include "world/chunkmap.h"
 #include "world/chunk.h"
 #include "world/voxeltypemap.h"
@@ -38,6 +41,8 @@ IngameStage::IngameStage (ComputingCubes *app)
 	playerCam->y = 0.5;
 	playerCam->z = -1.0;
 	axis = new GLCoordAxis ();
+	picker = new WireCube ();
+	cross = new CrossHairs ();
 	
 	cm = new ChunkMap (terrainTex);
 	for (int x=0; x<16; x++) {
@@ -45,7 +50,8 @@ IngameStage::IngameStage (ComputingCubes *app)
 			ChunkId k = chunkVectorToId (x,0,z);
 			cm->chunks [k] = new Chunk ();
 			for (int i=0; i<FULLCHUNKSIZE; i++)
-				cm->chunks [k]->voxels [i] = (i + i/CHUNKSIZE + i/CHUNKSIZE/CHUNKSIZE) % 2;
+				//cm->chunks [k]->voxels [i] = (i + i/CHUNKSIZE + i/CHUNKSIZE/CHUNKSIZE) % 2;
+				cm->chunks [k]->voxels [i] = rand () % VOXTYPECOUNT;
 			cm->chunks [k]->recreateMesh (x, 0, z, cm);
 		}
 	}
@@ -63,10 +69,15 @@ IngameStage::~IngameStage ()
 
 void IngameStage::update ()
 {
+	cm->hitFirstBlock (playerCam, 10, &faceHit);
+	cout << (int)faceHit.face << endl;
 }
 
 void IngameStage::drawScene ()
 {
+	//
+	// Camera movement, TODO: shall be done in update()
+	//
 	playerCam->x +=
 		(fwdSpeed - backSpeed) * sin (degToRad (playerCam->altitude)) +
 		(rightSpeed - leftSpeed) * cos (degToRad (playerCam->altitude));
@@ -75,13 +86,51 @@ void IngameStage::drawScene ()
 		(rightSpeed - leftSpeed) * sin (degToRad (playerCam->altitude));
 	playerCam->y += upSpeed - downSpeed;
 	
+	//
+	// World drawing
+	//
 	app->display->activateWorldDrawMode (playerCam);
 
 	cm->draw ();
+	
+	if (faceHit.face != VOXFACEUNDEF) {
+		Sint32 voxCoord[3] = {faceHit.voxelCoord[0], faceHit.voxelCoord[1], faceHit.voxelCoord[2]};
+		glPushMatrix ();
+		switch (faceHit.face) {
+		case VOXFACEFRONT:
+			glTranslated (voxCoord[0]+0.5, voxCoord[1]+0.5, voxCoord[2] + 0.0);
+			break;
+		case VOXFACEBACK:
+			glTranslated (voxCoord[0]+0.5, voxCoord[1]+0.5, voxCoord[2] + 1.0);
+			break;
+		case VOXFACERIGHT:
+			glTranslated (voxCoord[0]+1.0, voxCoord[1]+0.5, voxCoord[2] + 0.5);
+			glRotatef (90,0,1,0);
+			break;
+		case VOXFACELEFT:
+			glTranslated (voxCoord[0]+0.0, voxCoord[1]+0.5, voxCoord[2] + 0.5);
+			glRotatef (90,0,1,0);
+			break;
+		case VOXFACETOP:
+			glTranslated (voxCoord[0]+0.5, voxCoord[1]+1.0, voxCoord[2] + 0.5);
+			glRotatef (90,1,0,0);
+			break;
+		case VOXFACEBOTTOM:
+			glTranslated (voxCoord[0]+0.5, voxCoord[1]+0.0, voxCoord[2] + 0.5);
+			glRotatef (90,1,0,0);
+			break;
+		}
+		glScaled (1.01, 1.01, 0.02);
+		picker->draw ();
+		glPopMatrix ();
+	}
 
 	glDisable (GL_DEPTH_TEST);
 	axis->draw ();
 	
+	//
+	// Screen space drawing
+	//
 	app->display->activateScreenDrawMode ();
 
 	stringstream mystream;
@@ -106,6 +155,10 @@ void IngameStage::drawScene ()
 	delete labelTex;
 	
 	logoTex->drawEx (app->display->w-10-logoTex->w, 10, 0.5);
+
+	glMatrixMode (GL_MODELVIEW);
+	glTranslated (app->display->w / 2.0, app->display->h / 2.0, 0);
+	cross->draw ();
 }
 
 void IngameStage::onEvent (SDL_Event *event)
